@@ -1,13 +1,13 @@
 {
   "basics": {
-    "name": "Molly Maluhia",
-    "label": "Student",
+    "name": "Mark Miller",
+    "label": "Engineer",
     "picture": "https://github.com/kambergjohnson.png",
-    "email": "molly@hawaii.edu",
+    "email": "markdmiller40@outlook.com",
     "phone": "808-333-4444",
-    "website": "https://mmaluhia.github.io",
-    "summary": "I am studying for a B.S. in Computer Science in the Department of Information and Computer Sciences at the University of Hawaii. I expect to graduate in Spring, 2024.",
-    "location": { "address": "", "postalCode": "96822", "city": "Honolulu", "countryCode": "USA", "region": "Hawaii" },
+    "website": "https://markdmillerjr.github.io",
+    "summary": "I am an engineer",
+    "location": { "address": "", "postalCode": "61103", "city": "Rockford", "countryCode": "USA", "region": "Illinois" },
     "profiles": [
       { "network": "github", "username": "mmaluhia", "url": "http://github.com/changeme" },
       { "network": "linkedin", "username": "mollymaluhia", "url": "http://linkedin.com/in/changeme" },
