@@ -14,14 +14,18 @@
   },
   "interests": [
     { "name": "Aircraft Design" },
-    { "name": "Machine Learning" },
+    { "name": "3D Modeling" },
     { "name": "Electric Motor Design" },
     { "name": "PCB Desgin" },
   ],
   "skills": [
     {
-      "name": "Languages and Frameworks",
-      "keywords": [ "C", "C++", "Java", "Javascript", "Assembly", "Common Lisp" ]
+      "name": "Languages",
+      "keywords": [ "MATLAB", "Python" ]
+    },
+    {
+      "name": "Technical",
+      "keywords": [ "SolidWorks", "Altium Designer" ]
     },
     {
       "name": "Toolsets/OS",
