@@ -4,23 +4,19 @@
     "label": "Engineer",
     "picture": "https://github.com/markdmillerjr.png",
     "email": "markdmiller40@outlook.com",
-    "phone": "808-333-4444",
     "website": "https://markdmillerjr.github.io",
-    "summary": "I am an engineer",
+    "summary": "I am an aerospace engineer with a passion for UAV design, analysis, and fabrication",
     "location": { "address": "", "postalCode": "61103", "city": "Rockford", "countryCode": "USA", "region": "Illinois" },
     "profiles": [
-      { "network": "github", "username": "mmaluhia", "url": "http://github.com/changeme" },
+      { "network": "github", "username": "markdmillerjr", "url": "http://github.com/markdmillerjr" },
       { "network": "linkedin", "username": "mollymaluhia", "url": "http://linkedin.com/in/changeme" },
-      { "network": "twitter", "username": "mollymal", "url": "http://twitter.com/changeme" },
-      { "network": "instagram", "username": "molly", "url": "http://instagram.com/changeme" }
     ]
   },
   "interests": [
-    { "name": "Interactive media" },
-    { "name": "Neuromorphic Computing" },
-    { "name": "Quantum Computing" },
-    { "name": "Robotics" },
-    { "name": "3D Graphics" }
+    { "name": "Aircraft Design" },
+    { "name": "Machine Learning" },
+    { "name": "Electric Motor Design" },
+    { "name": "PCB Desgin" },
   ],
   "skills": [
     {
@@ -34,11 +30,11 @@
   ],
   "education": [
     {
-      "institution": "University of Hawaii, Honolulu, HI",
-      "area": "Computer Science (expected Spring, 2018)",
+      "institution": "Embry-Riddle Aeronautical University, Prescott, AZ",
+      "area": "Aerospace Engineering, 2018",
       "studyType": "B.S.",
-      "startDate": "2013-09-01",
-      "endDate": "Present",
+      "startDate": "2014-09-14",
+      "endDate": "2018-05-03",
       "courses": [
       ]
     }
