@@ -11,7 +11,7 @@ labels:
 summary: "Senior Capstone Project designing a supersonic business jet capable of 7,500NM at Mach 2.2 with 80 passengers."
 ---
 
-<img class="img-fluid" src="../img/cotton/cotton-header.png">
+<img class="img-fluid" src="../img/capstone/top.png">
 
 Our senior capstone project entailed designing a supersonic transport capable of traveling 7,500NM at Mach 2.2 with 80 passengers. The aircraft had to meet the initial requirements, as well as the FAA, and ICAO requirements for passenger aircraft.
 
