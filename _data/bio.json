@@ -9,14 +9,14 @@
     "location": { "address": "", "postalCode": "61103", "city": "Rockford", "countryCode": "USA", "region": "Illinois" },
     "profiles": [
       { "network": "github", "username": "markdmillerjr", "url": "http://github.com/markdmillerjr" },
-      { "network": "linkedin", "username": "markmiller", "url": "https://www.linkedin.com/in/mark-miller-8847b7120/" },
+      { "network": "linkedin", "username": "markmiller", "url": "https://www.linkedin.com/in/mark-miller-8847b7120/" }
     ]
   },
   "interests": [
     { "name": "Aircraft Design" },
     { "name": "3D Modeling" },
     { "name": "Electric Motor Design" },
-    { "name": "PCB Design" },
+    { "name": "PCB Design" }
   ],
   "skills": [
     {
