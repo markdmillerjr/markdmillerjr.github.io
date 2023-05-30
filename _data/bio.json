@@ -65,14 +65,14 @@
   ],
   "volunteer": [
     {
-      "organization": "Center for Renewable Energy and Island Sustainability",
-      "website": "http://manoa.hawaii.edu/reis",
-      "position": "Software Developer",
-      "startDate": "2016-01-01",
-      "endDate": "Present",
+      "organization": "Senior Capstone Design Project",
+      "website": "",
+      "position": "Aerodynamics Lead",
+      "startDate": "2017-08",
+      "endDate": "2018-05",
       "summary": "Lead developer for weather sensing project",
       "highlights": [
-        "Design firmware for distributed weather sensor network",
+        "Performed both subsonic and supersonic aerodynamic calculations for the wing, empennage, and fuselage, performed performance calculations to ensure adherence to the RFP, CFR, and ICAO requirements",
         "Maintain custom data collection and storage infrastructure"
       ]
     },
