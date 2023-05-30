@@ -16,7 +16,7 @@
     { "name": "Aircraft Design" },
     { "name": "3D Modeling" },
     { "name": "Electric Motor Design" },
-    { "name": "PCB Desgin" },
+    { "name": "PCB Design" },
   ],
   "skills": [
     {
@@ -63,7 +63,7 @@
       ]
     }
   ],
-  "volunteer": [
+  "Projects": [
     {
       "organization": "Center for Renewable Energy and Island Sustainability",
       "website": "http://manoa.hawaii.edu/reis",
