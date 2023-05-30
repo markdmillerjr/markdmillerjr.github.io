@@ -27,7 +27,7 @@
     {
       "name": "Technical",
       "keywords": [ "SolidWorks", "Altium Designer", "3D Printing", "Miniature Machining(Mill/Lathe)", "Carpentry"]
-    },
+    }
   ],
   "education": [
     {
@@ -119,6 +119,6 @@
       "date": "2014",
       "awarder": "Guilford High School",
       "summary":""
-    },
-  ],
+    }
+  ]
 }
