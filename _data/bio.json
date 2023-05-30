@@ -65,28 +65,38 @@
   ],
   "volunteer": [
     {
-      "organization": "Senior Capstone Design Project",
+      "organization": "Senior Capstone Design Project - Supersonic Business Jet",
       "website": "",
       "position": "Aerodynamics Lead",
       "startDate": "2017-08",
       "endDate": "2018-05",
-      "summary": "Lead developer for weather sensing project",
+      "summary": "Aerodynamics lead of a 11-person team",
       "highlights": [
-        "Performed both subsonic and supersonic aerodynamic calculations for the wing, empennage, and fuselage, performed performance calculations to ensure adherence to the RFP, CFR, and ICAO requirements",
-        "Maintain custom data collection and storage infrastructure"
+        "Performed both subsonic and supersonic aerodynamic calculations for the wing, empennage, and fuselage, performed performance calculations to ensure adherence to the RFP, CFR, and ICAO requirements"
       ]
     },
     {
-      "organization": "",
+      "organization": "Independent Study - Tandem Wing Segment Wind Tunnel Model",
       "website": "",
-      "position": "Professional organization involvement",
-      "startDate": "",
-      "endDate": "",
+      "position": "Individual Project with mentor",
+      "startDate": "2016-04",
+      "endDate": "2016-06",
       "summary": "",
       "highlights": [
-        "Chair, ACM Manoa, 2016-Present",
-        "Member, IEEE Student Branch, 2014-Present",
-        "Webmaster/IT Officer, IEEE Student Branch, UH Manoa, 2012-2013"
+        "Designed, built, tested, and presented a wind tunnel model analyzing the feasibility of two wing segments in tandem.",
+        "The results were presented at the annual AAAS scientific conference."
+      ]
+    },
+        {
+      "organization": "Independent Project - Unmanned Aerial System",
+      "website": "",
+      "position": "Individual Project",
+      "startDate": "2019-08",
+      "endDate": "present",
+      "summary": "",
+      "highlights": [
+        "Designing a dual aircraft UAS system capable of performing an autonomous in-flight battery transfer.",
+        "The design is utilizing custom motors, off-the-self sensors, 3D printed components, electropermanent magnets, a carbon-fibre chassis, and an onboard computer running a ML algorithm to control the aircraft."
       ]
     }
   ],
