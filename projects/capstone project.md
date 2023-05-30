@@ -1,7 +1,7 @@
 ---
 layout: project
 type: project
-image: img/cotton/cotton-square.png
+image: img/Top.png
 title: "Senior Capstone Project"
 date: 2017
 published: true
