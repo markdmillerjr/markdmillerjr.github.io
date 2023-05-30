@@ -9,7 +9,7 @@
     "location": { "address": "", "postalCode": "61103", "city": "Rockford", "countryCode": "USA", "region": "Illinois" },
     "profiles": [
       { "network": "github", "username": "markdmillerjr", "url": "http://github.com/markdmillerjr" },
-      { "network": "linkedin", "username": "mollymaluhia", "url": "http://linkedin.com/in/changeme" },
+      { "network": "linkedin", "username": "markmiller", "url": "https://www.linkedin.com/in/mark-miller-8847b7120/" },
     ]
   },
   "interests": [
@@ -25,12 +25,8 @@
     },
     {
       "name": "Technical",
-      "keywords": [ "SolidWorks", "Altium Designer" ]
+      "keywords": [ "SolidWorks", "Altium Designer", "3D Printing", "Miniature Machining(Mill/Lathe)", "Carpentry"]
     },
-    {
-      "name": "Toolsets/OS",
-      "keywords": [ "MacOS", "Ubuntu", "Git/GitHub", "g++", "TI LaunchPad" ]
-    }
   ],
   "education": [
     {
@@ -45,27 +41,25 @@
   ],
   "work": [
     {
-      "company": "UH Manoa Board of Publications",
-      "position": "Web Developer",
-      "website": "",
-      "startDate": "2015-08-01",
+      "company": "Amazon.com, Inc. (Amazon Air)",
+      "position": "Process Assistant L3",
+      "startDate": "2021-03-12",
       "endDate": "Present",
-      "summary": "Head of online presence for Ka Leo",
+      "summary": "Supervisor overseeing freight flow at site",
       "highlights": [
-        "Maintain, update, and oversee official college newspaper website",
-        "Drive, design and build student-community projects for UH Manoa"
+        "Identify and train strong candidates for team lead positions, two promoted to L3 positions",
+        "Drive improvements in team efficiency and morale"
       ]
     },
     {
-      "company": "UH Information Technology Services",
-      "position": "Help Desk Consultant",
-      "website": "http://www.hawaii.edu/its/",
-      "startDate": "2015-01-01",
-      "endDate": "2016-03-15",
-      "summary": "",
+      "company": "Amazon.com, Inc. (Amazon Air)",
+      "position": "Sort Associate L1",
+      "startDate": "2020-04-23",
+      "endDate": "2021-03-12",
+      "summary": "Team member assisting with sort operation ",
       "highlights": [
-        "Troubleshoot software, hardware and networking issues over the phone",
-        "Answer phone and email responses to the ITS Help Desk"
+        "Trained in leading sort lane under supervision of process assistant",
+        "Selected to train new team members in day-to-day operations"
       ]
     }
   ],
@@ -98,21 +92,22 @@
   ],
   "awards": [
     {
-      "title": "B+ Scholarship",
+      "title": "Eagle Scout",
       "date": "2013-Present",
-      "awarder": "State of Hawaii",
-      "summary": "Scholarships awarded to incoming freshmen and continuing students who complete a rigorous high school curriculum with a minimum overall GPA of 3.0 at a Hawai'i public school."
+      "awarder": "Boy Scouts of America",
+      "summary": "Achieved highest rank in scouting after completing a community service project consisting of constructing a new sign for a community park"
     },
     {
-      "title": "First place",
-      "date": "2015",
-      "awarder": "University of Hawaii Micromouse Competition",
-      "summary": "My team won first place in 2015.  See my portfolio site for more details."
-    }
-  ],
-  "references": [
+      "title": "National Honor Society",
+      "date": "2012-2014",
+      "awarder": "Guilford High School",
+      "summary": ""
+    },
     {
-      "name": "Available upon request"
-    }
-  ]
+      "title": "Summa Cum Laude",
+      "date": "2014",
+      "awarder": "Guilford High School",
+      "summary":""
+    },
+  ],
 }
