@@ -26,4 +26,30 @@ My role within the project during Phase 1 was aerodynamics. I was tasked with de
 
 Another significant aspect of our project required us to make a compelling business argument for our design. We had to sell our design to our professors as well as an independent panel of judges from industry as to why our design warranted funding. We created a company name, logo and aircraft name. Apart from being judged on the technical aspects of our design, we were also judged on the professionalism of our presentaton.
 
-<img class="img-fluid" src="../img/capstone/58b.png">
+One of the reasons I chose Riddle to study engineering was the hands-on nature of their curriculum. This was evident during our capstone project when we designed and built a wind-tunnel model to test our predicted values. Our model was 3D printed on a Stratasys Dimension 1200es 3D printer using ABS. 
+
+<div class="text-center p-5">
+  <img class="img-fluid" src="../img/capstone/WTT_Model_2.jpg">
+</div>
+
+The wings were reinforced with fiberglass resin and were tested structurally by determining the amount of lead shot the wings could support. This limit helped determine the max wind-tunnel speed. If vibrations or flutter were observed before the sturctural limit was reached, then that velocity set the max tunnel speed. 
+
+<div class="text-center p-5">
+  <img class="img-fluid" src="../img/capstone/structural_test_1.jpg">
+  <img class="img-fluid" src="../img/capstone/structural_test_2.jpg">
+</div>
+
+After sanding, the model was painted and covered in tufts to help visualize airflow separation across the aircraft.
+
+<div class="text-center p-5">
+  <img class="img-fluid" src="../img/capstone/WTT_Model_1.jpg">
+</div>
+
+<div class="text-center p-5">
+  <img class="img-fluid" src="../img/capstone/58b.png">
+  <img class="img-fluid" src="../img/capstone/Ghost.png">
+  <img class="img-fluid" src="../img/capstone/WTT_Model_2.jpg">
+  <img class="img-fluid" src="../img/capstone/WTT_Model_1.jpg">
+</div>
+
+
