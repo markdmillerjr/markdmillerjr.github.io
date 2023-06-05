@@ -26,7 +26,7 @@ My role within the project during Phase 1 was aerodynamics. I was tasked with de
 
 Another significant aspect of our project required us to make a compelling business argument for our design. We had to sell our design to our professors as well as an independent panel of judges from industry as to why our design warranted funding. We created a company name, logo and aircraft name. Apart from being judged on the technical aspects of our design, we were also judged on the professionalism of our presentaton.
 
-One of the reasons I chose Riddle to study engineering was the hands-on nature of their curriculum. This was evident during our capstone project when we designed and built a wind-tunnel model to test our predicted values. Our model was 3D printed on a Stratasys Dimension 1200es 3D printer using ABS. 
+One of the reasons I chose Riddle to study engineering was the hands-on nature of their curriculum. This was evident during our capstone project where we designed and built a wind-tunnel model to test our predicted values. Our model was 3D printed on a Stratasys Dimension 1200es 3D printer using ABS. 
 
 <div class="text-center p-5">
   <img class="img-fluid" src="../img/capstone/WTT_Model_2.jpg">
@@ -44,12 +44,23 @@ After sanding, the model was painted and covered in tufts to help visualize airf
 <div class="text-center p-5">
   <img class="img-fluid" src="../img/capstone/WTT_Model_1.jpg">
 </div>
+  
+  The model was placed in a closed circuit wind tunnel with a maximum velocity of 230 ft/s. 
 
 <div class="text-center p-5">
-  <img class="img-fluid" src="../img/capstone/58b.png">
-  <img class="img-fluid" src="../img/capstone/Ghost.png">
-  <img class="img-fluid" src="../img/capstone/WTT_Model_2.jpg">
-  <img class="img-fluid" src="../img/capstone/WTT_Model_1.jpg">
+  <img class="img-fluid" src="../img/capstone/Wind_Tunnel.png">
+</div>
+
+  Black light was used to aid in identifying direction of tufts. At 0 degrees angle of attack, the pressure differential across the wing is apppoximately equal. Therefore, the tufts are pointing rearward.
+
+<div class="text-center p-5">
+  <img class="img-fluid" src="../img/capstone/IMG_3431.jpg">
+</div>
+
+  At 24 degrees angle of attack, the pressure differential across the upper and lower surface of the wing creates a large vortex that increases the lift of the delta wing. This vortex is visible by the tufts.
+
+<div class="text-center p-5">
+  <img class="img-fluid" src="../img/capstone/IMG_3450.jpg">
 </div>
 
 
