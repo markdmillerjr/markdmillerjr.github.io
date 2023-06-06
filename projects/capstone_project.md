@@ -45,7 +45,7 @@ After sanding, the model was painted and covered in tufts to help visualize airf
   <img class="img-fluid" src="../img/capstone/WTT_Model_1.jpg">
 </div>
   
-  The model was placed in a closed circuit wind tunnel with a maximum velocity of 230 ft/s. 
+  The model was placed in a closed circuit wind tunnel with a maximum velocity of 230 ft/s. The model was rotated though -4 to 24 degrees angle of attack at a maximum velocity of 124.6 ft/s.
 
 <div class="text-center p-5">
   <img class="img-fluid" src="../img/capstone/Wind_Tunnel.png">
