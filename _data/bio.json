@@ -1,12 +1,12 @@
 {
   "basics": {
     "name": "Mark Miller",
-    "label": "Engineer",
+    "label": "Aerospace Engineer",
     "picture": "https://github.com/markdmillerjr.png",
     "email": "markdmiller40@outlook.com",
     "website": "https://markdmillerjr.github.io",
-    "summary": "I am an aerospace engineer with a passion for UAV design, analysis, and fabrication",
-    "location": { "address": "", "postalCode": "61103", "city": "Rockford", "countryCode": "USA", "region": "Illinois" },
+    "summary": "I am an engineer with a passion for solving complex problems through 3D design, programming, or rapid prototyping.",
+    "location": { "address": "", "postalCode": "", "city": "Rockford", "countryCode": "USA", "region": "Illinois" },
     "profiles": [
       { "network": "github", "username": "markdmillerjr", "url": "http://github.com/markdmillerjr" },
       { "network": "linkedin", "username": "markmiller", "url": "https://www.linkedin.com/in/mark-miller-8847b7120/" }
@@ -17,6 +17,8 @@
     { "name": "3D Modeling" },
     { "name": "Electric Motor Design" },
     { "name": "PCB Design" },
+    { "name": "Pyhon"},
+    { "name": "3D Printing"},
     { "name": "Carpentry"}
   ],
   "skills": [

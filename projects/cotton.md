@@ -1,10 +1,10 @@
 ---
-layout: project
-type: project
+layout: sub_project
+type: sub_project
 image: img/cotton/cotton-square.png
 title: "Cotton"
 date: 2014
-published: false
+published: true
 labels:
   - Lisp
   - GitHub
