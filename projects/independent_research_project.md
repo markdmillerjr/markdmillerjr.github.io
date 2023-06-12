@@ -24,12 +24,9 @@ The original concept that I proposed was of a Reusable Launch Vehicle (RLV) wher
   <img width="600px" src="../img/independent_research_project/SCAN0001.jpg" class="img-thumbnail" >
   <img width="600px" src="../img/independent_research_project/SCAN0002.jpg" class="img-thumbnail" >
   <img width="600px" src="../img/independent_research_project/SCAN0003.jpg" class="img-thumbnail" >
-  <img width="600px" src="../img/independent_research_project/SCAN0004.jpg"
-  class="img-thumbnail" >
-  <img width="600px" src="../img/independent_research_project/SCAN0005.jpg"
-  class="img-thumbnail" >
-  <img width="600px" src="../img/independent_research_project/SCAN0006.jpg"
-  class="img-thumbnail" >
+  <img width="600px" src="../img/independent_research_project/SCAN0004.jpg" class="img-thumbnail" >
+  <img width="600px" src="../img/independent_research_project/SCAN0005.jpg" class="img-thumbnail" >
+  <img width="600px" src="../img/independent_research_project/SCAN0006.jpg" class="img-thumbnail" >
 </div>
 
 <h3>Wind-Tunnel Testing</h3>
