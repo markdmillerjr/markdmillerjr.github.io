@@ -51,7 +51,7 @@ After the initial design was finalized, I reviewed my dynamics notes and did an 
 
 <a href="Docking-Battery Mechanism M-1 Analysis.pdf">Docking-Battery Mechanism Analysis</a>
 
-With distributing the force among four cables and levers, along with having a longer moment arm connected to the cable, the required force on the cross member to actuate the system is pretty reasonable. To connect the aircraft together, a max torque of 13oz-in is required in the arms and approximately 2.4 lbs-force in the cables. Assuming a factor of safety of 1.5 and rounding up equates to a max tension of 4 lbs-force or about 18 newtons. The Actuonix L12-R Micro Linear Servo was chosen with a gearing of 100:1 to ensure plenty of force to withstand wind gusts.
+With distributing the force among four cables and levers, along with having a longer moment arm connected to the cable, the required force on the cross member to actuate the system is pretty reasonable. To connect the aircraft together, a max torque of 13oz-in is required in the arms and approximately 2.4 lbs-force in the cables. Assuming a factor of safety of 1.5 and rounding up equates to a max tension of 4 lbs-force or about 18 newtons. The Actuonix L12-R Micro Linear Servo was chosen with a gearing of 100:1 which provides 42 newtons of force to ensure plenty of force to withstand wind gusts.
 
 <a href="https://www.actuonix.com/assets/images/datasheets/ActuonixL12Datasheet.pdf">Linear Actuator</a>
 

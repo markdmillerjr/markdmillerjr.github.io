@@ -50,3 +50,5 @@ The 3in configuration at 15deg AOA, didn't produce as much downwash onto the tra
 The final poster presented at the AAAS scientific conference in San Diego. Sadly I didn't win any awards. :(
 
 <img class="img-fluid" src="../img/independent_research_project/AAAS_Presentation.jpg">
+
+<img class="img-fluid" src="../img/independent_research_project/me_poster.jpg">
