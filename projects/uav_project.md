@@ -21,7 +21,7 @@ summary: "An independent project where I am designing an autonomous UAV capable 
 
 <img class="img-fluid" src="../img/uav_project/Combined_Aircraft.png">
 
-<h1>Project Overview</h1>
+<h3>Project Overview</h3>
 
 <a href="background.html">Background and Motivation</a>
 

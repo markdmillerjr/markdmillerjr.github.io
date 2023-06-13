@@ -39,6 +39,23 @@ The cables are mounted to a cross member that can translate along the longitudin
 <img class="img-fluid" src="../img/uav_project/concepts/docking_mech.jpg">
 <img class="img-fluid" src="../img/uav_project/concepts/docking_battery_mech_iso_v1.jpg">
 
+<h3>Dynamics</h3>
+
+After the initial design was finalized, I reviewed my dynamics notes and did an analysis on the arm and cable system to ensure it produced enough force to hold the two aircraft together.
+
+<img class="img-fluid" src="../img/uav_project/concepts/arm_moment.jpg">
+<img class="img-fluid" src="../img/uav_project/concepts/FBD.jpg">
+<img class="img-fluid" src="../img/uav_project/concepts/dynamics.jpg">
+
+<a href="Docking-Battery Mechanism M-1.pdf">Docking-Battery Mechanism Moment of Inertias</a>
+
+<a href="Docking-Battery Mechanism M-1 Analysis.pdf">Docking-Battery Mechanism Analysis</a>
+
+With distributing the force among four cables and levers, along with having a longer moment arm connected to the cable, the required force on the cross member to actuate the system is pretty reasonable. To connect the aircraft together, a max torque of 13oz-in is required in the arms and approximately 2.4 lbs-force in the cables. Assuming a factor of safety of 1.5 and rounding up equates to a max tension of 4 lbs-force or about 18 newtons. The Actuonix L12-R Micro Linear Servo was chosen with a gearing of 100:1 to ensure plenty of force to withstand wind gusts.
+
+<a href="https://www.actuonix.com/assets/images/datasheets/ActuonixL12Datasheet.pdf">Linear Actuator</a>
+
+
 <h3>Version 1.0 Renders</h3>
 
 <h5>Position 1</h5>
@@ -51,7 +68,7 @@ Levers in released position. Center groove is empty. Aircraft are undocked. Noti
 Levers in released position, center member is inside groove. Aircraft are midway through docking sequence.
 <img class="img-fluid" src="../img/uav_project/concepts/M-1_R-1 Docking Systems Closeup Undocked.png">
 
-<h5>Positon 3</h5>
+<h5>Position 3</h5>
 
 Levers in engaged positon, center member is presed against groove. Aircraft are docked.
 <img class="img-fluid" src="../img/uav_project/concepts/M-1_R-1 Docking Systems Closeup Docked.png">

@@ -28,7 +28,7 @@
     },
     {
       "name": "Technical",
-      "keywords": [ "SolidWorks", "Altium Designer", "3D Printing", "Miniature Machining(Mill/Lathe)", "Carpentry"]
+      "keywords": [ "SolidWorks", "Altium Designer", "Microsoft Office", "3D Printing", "Miniature Machining(Mill/Lathe)", "Carpentry"]
     }
   ],
   "education": [
@@ -48,7 +48,7 @@
       "position": "Process Assistant L3",
       "startDate": "2021-03-12",
       "endDate": "Present",
-      "summary": "Supervisor overseeing freight flow at site",
+      "summary": "Supervisor overseeing flow of freight at site",
       "highlights": [
         "Identify and train strong candidates for team lead positions, two promoted to L3 positions",
         "Drive improvements in team efficiency and morale"
