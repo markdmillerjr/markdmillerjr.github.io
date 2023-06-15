@@ -276,9 +276,8 @@ comboAirfoil_coords_yRoot = rearrangedYArray;
 Here are the finished airfoils for the root and tip, the NACA 2412 and NACA 63(1)-212.
 
 <div>
-<iframe type="text/html" src="combo_naca2412.html" width="150" height="3200"></iframe>
-
-<iframe type="text/html" src="combo_naca63-212.html" width="150" height="3200"></iframe>
+    <iframe type="text/html" src="combo_naca2412.html" width="150" height="3200"></iframe>
+    <iframe type="text/html" src="combo_naca63-212.html" width="150" height="3200"></iframe>
 </div>
 
 Finally, here is the code that plots the wing. Note how rather then using a FOR loop to create the wing by drawing a face connecting both segments together on the root and tip, a surface function is used which creates the wing by lofting a surface between the root and tip airfoils.  The above process still holds true, where the X-Axis points need to be in the same location across the root and tip for the loft to work. A FOR loop would still work, but a surface is faster and also allows for shading the model. I showed the steps of using a FOR loop to help better understand the overall process.
