@@ -20,16 +20,16 @@ The first, the ability to model a wing with a different root and tip airfoil was
 
 <h5>Wing Plotting Steps</h5>
 <div class="text-center p-4">
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing1.png" class="img-thumbnail" >
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing2.png" class="img-thumbnail" >
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing3.png" class="img-thumbnail" >
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing4.png" class="img-thumbnail" >
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing5.png" class="img-thumbnail" >
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing6.png" class="img-thumbnail" >
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing7.png" class="img-thumbnail" >
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing8.png" class="img-thumbnail" >
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing9.png" class="img-thumbnail" >
-	<img width="600px" src="../img/pac_project/wing_plotting_steps/wing10.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing1.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing2.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing3.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing4.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing5.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing6.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing7.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing8.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing9.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_plotting_steps/wing10.png" class="img-thumbnail" >
 </div>
 
 Here is a snippet of the code that draws one segment of the wing.
@@ -53,17 +53,16 @@ Now all of this is simple to understand and use. You want to plot a wing, input 
 
 Suppose we wish to create a wing with a NACA 2412 airfoil for the root and a NACA 63(1)-212 airfoil for the tip. The 2412 has 35 points along it's cross-section, while the 63(1)-212 has 141.
 <div>
-<iframe type="text/html" src="naca2412.html" width="150" height="3200"></iframe>
-
-<iframe type="text/html" src="NACA63-212.html" width="150" height="3200"></iframe>
+    <iframe type="text/html" src="naca2412.html" width="150" height="3200"></iframe>
+    <iframe type="text/html" src="NACA63-212.html" width="150" height="3200"></iframe>
 </div>
 
 <div>
-<img class="img-fluid" src="../img/pac_project/root.png">
-NACA 2412
-<img class="img-fluid" src="../img/pac_project/tip.png">
-NACA 63(1)-212
-<div>
+    <img class="img-fluid" src="../img/pac_project/root.png">
+    NACA 2412
+    <img class="img-fluid" src="../img/pac_project/tip.png">
+    NACA 63(1)-212
+</div>
 
 The difficulty is in how an airfoil is constructed. What you need to do then is increase the size of the array of the NACA 2412 airfoil to equal the NACA 63(1)-212. The problem is ensuring that the increased array is the same geometric shape and size as a standard NACA 2412. Each point that is added to the 2412 airfoil has to be at the same X-Axis location as the 63(1)-212 airfoil for MATLAB to plot a face connecting those segments as shown in the above steps. Enlarging the 2412 is straightforward enough, just increase the size of the array and ensure the Y-Axis points correspond to the correct X-Axis points. Once you have this enlarged array, you need to fill in the X-Axis location gaps (gaps because the 2412 has X-Axis points from 0.9, 0.95, 1 while the 63(1)-212 has X-Axis points from 0.968..., 0.987..., 1) with the points from the 63(1)-212. 
 
@@ -152,7 +151,7 @@ Code that fills in gaps after smaller airfoil is enlarged.
         end
 ```
 
-Code that calculates slope of each segment and location of each segment on airfoil.
+Code that calculates the slope of each segment and location of each segment on airfoil.
 
 ```matlab
 % Next we need to determine the slope of each segment of the airfoil. This
@@ -273,6 +272,7 @@ end
 % rearrangedYArray array (empty spots are filled in)
 comboAirfoil_coords_yRoot = rearrangedYArray;
 ```
+
 Here are the finished airfoils for the root and tip, the NACA 2412 and NACA 63(1)-212.
 
 <div>
