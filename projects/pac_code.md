@@ -55,7 +55,7 @@ Suppose we wish to create a wing with a NACA 2412 airfoil for the root and a NAC
 <div>
 <iframe type="text/html" src="naca2412.html" width="150" height="3200"></iframe>
 
-<iframe type="text/html" src="naca63-212.html" width="150" height="3200"></iframe>
+<iframe type="text/html" src="NACA63-212.html" width="150" height="3200"></iframe>
 </div>
 
 <div>
