@@ -78,6 +78,7 @@ Finally, this process needs to be completed for both airfoils, to ensure that th
 The following snippets of code are the MATLAB implementations of the process described above.
 
 Code that fills in gaps after smaller airfoil is enlarged.
+
 ```matlab
         % Following code places all of the original airfoil Y-Axis points
         % on the new combined airfoil X-Axis points. The location of each
@@ -150,6 +151,7 @@ Code that fills in gaps after smaller airfoil is enlarged.
             rearrangedYArray(findYSortedRoot) = airfoil_coords_yRoot(findYLocationArrayRoot(iRoot));
         end
 ```
+
 Code that calculates slope of each segment and location of each segment on airfoil.
 
 ```matlab
