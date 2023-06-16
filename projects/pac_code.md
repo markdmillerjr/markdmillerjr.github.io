@@ -68,9 +68,9 @@ The difficulty is in how an airfoil is constructed. What you need to do then is 
 
 The tricky part is that for each of these extra filled in points, you need to calculate the corresponding Y-Axis point that still fits geometrically with the original airfoil. You can do this by calculating the slope of the corresponding segment as, m = (y2 - y1) / (x2 - x1), where m is the slope of the segment and y2 and y1 are the Y-Axis points and x2 and x1 are the X-Axis points respectively. Also knowing the slopes of each segment isn't enough, you also need to know it's position on the airfoil. In other words, the slope is found from the local coordinates between each segment, you also need the global coordinates of the full airfoil to understand where to place the Y-Axis point for each X-Axis point that was filled in.
 
-<img class="img-fluid" src="../img/pac_project/combined_airfoils1.jpg">
+<img class="img-fluid" src="../img/pac_project/combined_airfoils1.png">
 
-<img class="img-fluid" src="../img/pac_project/combined_airfoils2.jpg">
+<img class="img-fluid" src="../img/pac_project/combined_airfoils2.png">
 
 Finally, this process needs to be completed for both airfoils, to ensure that their X-Axis points line up and the Y-Axis points are in the correct location. After this is complete, the full wing can be plotted.
 
@@ -281,7 +281,6 @@ Here are the finished airfoils for the root and tip, the NACA 2412 and NACA 63(1
 </div>
 
 Finally, here is the code that plots the wing. Note how rather then using a FOR loop to create the wing by drawing a face connecting both segments together on the root and tip, a surface function is used which creates the wing by lofting a surface between the root and tip airfoils.  The above process still holds true, where the X-Axis points need to be in the same location across the root and tip for the loft to work. A FOR loop would still work, but a surface is faster and also allows for shading the model. I showed the steps of using a FOR loop to help better understand the overall process.
-
 
 ```matlab
 % X-Coordinates
