@@ -64,10 +64,13 @@ Suppose we wish to create a wing with a NACA 2412 airfoil for the root and a NAC
     NACA 63(1)-212
 </div>
 
+<br>
+
 The difficulty is in how an airfoil is constructed. What you need to do then is increase the size of the array of the NACA 2412 airfoil to equal the NACA 63(1)-212. The problem is ensuring that the increased array is the same geometric shape and size as a standard NACA 2412. Each point that is added to the 2412 airfoil has to be at the same X-Axis location as the 63(1)-212 airfoil for MATLAB to plot a face connecting those segments as shown in the above steps. Enlarging the 2412 is straightforward enough, just increase the size of the array and ensure the Y-Axis points correspond to the correct X-Axis points. Once you have this enlarged array, you need to fill in the X-Axis location gaps (gaps because the 2412 has X-Axis points from 0.9, 0.95, 1 while the 63(1)-212 has X-Axis points from 0.968..., 0.987..., 1) with the points from the 63(1)-212. 
 
 The tricky part is that for each of these extra filled in points, you need to calculate the corresponding Y-Axis point that still fits geometrically with the original airfoil. You can do this by calculating the slope of the corresponding segment as, m = (y2 - y1) / (x2 - x1), where m is the slope of the segment and y2 and y1 are the Y-Axis points and x2 and x1 are the X-Axis points respectively. Also knowing the slopes of each segment isn't enough, you also need to know it's position on the airfoil. In other words, the slope is found from the local coordinates between each segment, you also need the global coordinates of the full airfoil to understand where to place the Y-Axis point for each X-Axis point that was filled in.
 
+Initial attempts at working the problem.
 <img class="img-fluid" src="../img/pac_project/combined_airfoils1.png">
 
 <img class="img-fluid" src="../img/pac_project/combined_airfoils2.png">

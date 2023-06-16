@@ -21,12 +21,12 @@ The original concept that I proposed was of a Reusable Launch Vehicle (RLV) wher
 
 <h3>Concept Sketches</h3>
 <div class="text-center p-4">
-  <img width="600px" src="../img/independent_research_project/SCAN0001.jpg" class="img-thumbnail" >
-  <img width="600px" src="../img/independent_research_project/SCAN0002.jpg" class="img-thumbnail" >
-  <img width="600px" src="../img/independent_research_project/SCAN0003.jpg" class="img-thumbnail" >
-  <img width="600px" src="../img/independent_research_project/SCAN0004.jpg" class="img-thumbnail" >
-  <img width="600px" src="../img/independent_research_project/SCAN0005.jpg" class="img-thumbnail" >
-  <img width="600px" src="../img/independent_research_project/SCAN0006.jpg" class="img-thumbnail" >
+  <img width="600px" src="../img/independent_research_project/SCAN0001.png" class="img-thumbnail" >
+  <img width="600px" src="../img/independent_research_project/SCAN0002.png" class="img-thumbnail" >
+  <img width="600px" src="../img/independent_research_project/SCAN0003.png" class="img-thumbnail" >
+  <img width="600px" src="../img/independent_research_project/SCAN0004.png" class="img-thumbnail" >
+  <img width="600px" src="../img/independent_research_project/SCAN0005.png" class="img-thumbnail" >
+  <img width="600px" src="../img/independent_research_project/SCAN0006.png" class="img-thumbnail" >
 </div>
 
 <h3>Wind-Tunnel Testing</h3>
@@ -35,6 +35,7 @@ For simplicity the wind-tunnel model consisted of only two segments of this prop
 <img class="img-fluid" src="../img/independent_research_project/side_view.jpg">
 
 <img class="img-fluid" src="../img/independent_research_project/isometric_view.jpg">
+
 
 <h3>Data</h3>
 The wind-tunnel results confirmed the initial analysis that the larger gap would be more stable due to the downwash off the leading wing onto the trailing wing. This downwash caused the trailing wing to produce lift at higher AOA's than the leading wing. When the leading wing began to stall at 15deg AOA, the 6in configuration allowed the trailing wing to see a lower AOA, resulting in a positive, nose down pitching moment to counteract the negative, nose up pitching moment caused by the leading wing stalling.

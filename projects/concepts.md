@@ -14,8 +14,8 @@ Below are the original sketches of the general concept. As the saying goes "a pi
 
 The overall concept is one of two aircraft; a primary designated "Mother" and a secondary designated "Reserve". Mother is designed for maximum endurance carrying a surveillance package, while Reserve is designed for maximum payload capacity to haul two sets of batteries around. Reserve was orignally conceived to be a fixed-wing, tilt-rotor configuration with VTOL (Vertical Takeoff and Landing) capability. The original idea was to maximize payload capacity as well as range. However, after realizing the complexity of the control system needed to perform the docking manuever, Reserve was changed to a quadcopter configuration. This allows for VTOL capability, as well as much simpler flight controls for the docking sequence.
 
-<img class="img-fluid" src="../img/uav_project/concepts/overview.jpg">
-<img class="img-fluid" src="../img/uav_project/concepts/drawing.jpg">
+<img class="img-fluid" src="../img/uav_project/concepts/overview.png">
+<img class="img-fluid" src="../img/uav_project/concepts/drawing.png">
 
 <h4>Version 1.0 Sketches</h4>
 The first version of the docking system was of a mechanical apparatus consisting of two plates mounted on a member protuding from the top of Reserve, meshing into a groove set into the underside of Mother with two opposing plates catching the Reserve plates to lock the aircraft into place. Also visible in the sketches are early ideas for the battery attachment.
@@ -43,9 +43,9 @@ The cables are mounted to a cross member that can translate along the longitudin
 
 After the initial design was finalized, I reviewed my dynamics notes and did an analysis on the arm and cable system to ensure it produced enough force to hold the two aircraft together.
 
-<img class="img-fluid" src="../img/uav_project/concepts/arm_moment.jpg">
-<img class="img-fluid" src="../img/uav_project/concepts/FBD.jpg">
-<img class="img-fluid" src="../img/uav_project/concepts/dynamics.jpg">
+<img class="img-fluid" src="../img/uav_project/concepts/FBD.png">
+<img class="img-fluid" src="../img/uav_project/concepts/arm_moment.png">
+<img class="img-fluid" src="../img/uav_project/concepts/dynamics.png">
 
 <a href="Docking-Battery Mechanism M-1.pdf">Docking-Battery Mechanism Moment of Inertias</a>
 
