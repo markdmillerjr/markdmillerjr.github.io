@@ -50,7 +50,7 @@ After sanding, the model was painted and covered in tufts to help visualize airf
 The model was then placed in a closed circuit wind-tunnel with a maximum velocity of 230 ft/s. The model was rotated though -4 to 24 degrees angle of attack at a maximum velocity of 124.6 ft/s.
 
 <div class="text-center p-3">
-  <img class="img-fluid" src="../img/capstone/Wind_Tunnel.png">
+  <img class="img-fluid" src="../img/capstone/Wind_Tunnel.jpg">
 </div>
 
 Black light was used to aid in identifying the direction of tufts and subsequently the airflow. At 0 degrees angle of attack, no change is observed in the tufts.
