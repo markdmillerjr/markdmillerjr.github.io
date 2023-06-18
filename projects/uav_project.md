@@ -23,10 +23,10 @@ summary: "An independent project where I am designing an autonomous UAV capable 
 
 <h3>Project Overview</h3>
 
-<a href="background.html">Background and Motivation</a>
+<a href="uav_background.html">Background and Motivation</a>
 
-<a href="concepts.html">Initial Concepts</a>
+<a href="uav_concepts.html">Concept</a>
 
-<a href="sensor_test.html">Sensor Concepts</a>
+<a href="uav_sensor_test.html">Sensor Concepts</a>
 
 <a href="magnets.html">Attachment Concepts</a>
