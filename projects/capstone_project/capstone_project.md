@@ -90,14 +90,6 @@ After testing we discovered an instability in our design. Due to the aerodynamic
 
 Our final presentation was in front of a team of industry experts where we presented our concept and the results from our testing. Curiously, one of the judges noted that the instability wouldn't be a problem with an active flight control system. Unfortunately, we weren't able to cite this as a solution due to a static stability requirement in all phases of flight.
 
-<!-- <div class="text-center p-3">
-  <img class="img-fluid" src="../img/capstone/Slide1.jpg">
-</div>
-
-<div class="text-center p-3">
-  <img class="img-fluid" src="../img/capstone/Slide2.jpg">
-</div> -->
-
 <div class="text-center p-3">
   <img class="img-fluid" src="../img/capstone/Slide1.jpg">
   <img class="img-fluid" src="../img/capstone/Slide2.jpg">
