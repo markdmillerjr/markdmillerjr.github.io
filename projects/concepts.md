@@ -14,6 +14,7 @@ Below are the original sketches of the general concept. As the saying goes "a pi
 
 The overall concept is one of two aircraft; a primary designated "Mother" and a secondary designated "Reserve". Mother is designed for maximum endurance carrying a surveillance package, while Reserve is designed for maximum payload capacity to haul two sets of batteries around. Reserve was orignally conceived to be a fixed-wing, tilt-rotor configuration with VTOL (Vertical Takeoff and Landing) capability. The original idea was to maximize payload capacity as well as range. However, after realizing the complexity of the control system needed to perform the docking manuever, Reserve was changed to a quadcopter configuration. This allows for VTOL capability, as well as much simpler flight controls for the docking sequence.
 
+<h4>Initial Concept Sketches</h4>
 <img class="img-fluid" src="../img/uav_project/concepts/overview.png">
 <img class="img-fluid" src="../img/uav_project/concepts/drawing.png">
 
