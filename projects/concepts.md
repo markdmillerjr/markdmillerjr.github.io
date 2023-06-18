@@ -22,22 +22,22 @@ The first version of the docking system was of a mechanical apparatus consisting
 
 The first concept of the docking arm. The idea is to use the weight of Reserve to hold the aircraft together. This is accomplished through the use of pulleys at opposite ends of the system. Overall sizing is dictated by the volume required for the batteries.
 
-<img class="img-fluid" src="../img/uav_project/concepts/docking_arm1.jpg">
-<img class="img-fluid" src="../img/uav_project/concepts/docking_arm2.jpg">
+<img class="img-fluid" src="../img/uav_project/concepts/docking_arm1.png">
+<img class="img-fluid" src="../img/uav_project/concepts/docking_arm2.png">
 
 An earlier version using gears to actuate the plates. The gears were quickly replaced with cables due to the efficiency of holding the plates in tension, rather then relying on the torque in the gears.
 
-<img class="img-fluid" src="../img/uav_project/concepts/docking_battery_mech_iso_v2.jpg">
+<img class="img-fluid" src="../img/uav_project/concepts/docking_battery_mech_iso_v2.png">
 
 A front view of the docking system. Note the two cables on the lever providing opposing force to either grab or release the center member. The weight of Reserve produces a downward moment on the levers. This is opposed by the second cable mounted at the end of the lever and routed around the pulleys at the ends. 
 
-<img class="img-fluid" src="../img/uav_project/concepts/docking_battery_mech_front.jpg">
-<img class="img-fluid" src="../img/uav_project/concepts/docking_battery_mech_top.jpg">
+<img class="img-fluid" src="../img/uav_project/concepts/docking_battery_mech_front.png">
+<img class="img-fluid" src="../img/uav_project/concepts/docking_battery_mech_top.png">
 
 The cables are mounted to a cross member that can translate along the longitudinal axis of the system. As the cross member slides towards the levers, the dock is engaged. Likewise, then the cross member slides away from the levers the dock is released.
 
-<img class="img-fluid" src="../img/uav_project/concepts/docking_mech.jpg">
-<img class="img-fluid" src="../img/uav_project/concepts/docking_battery_mech_iso_v1.jpg">
+<img class="img-fluid" src="../img/uav_project/concepts/docking_mech.png">
+<img class="img-fluid" src="../img/uav_project/concepts/docking_battery_mech_iso_v1.png">
 
 <h3>Dynamics</h3>
 
@@ -87,4 +87,4 @@ Levers in engaged positon, center member is presed against groove. Aircraft are 
 <img class="img-fluid" src="../img/uav_project/concepts/M-1 Docking System Explode.png">
 
 <h5>Version 2.0</h5>
-<img class="img-fluid" src="../img/uav_project/concepts/version_2_iso.jpg">
+<img class="img-fluid" src="../img/uav_project/concepts/version_2_iso.png">
