@@ -27,6 +27,6 @@ summary: "An independent project where I am designing an autonomous UAV capable 
 
 <a href="uav_concepts.html">Concept</a>
 
-<a href="uav_sensor_test.html">Sensor Concepts</a>
+<a href="uav_sensor_test.html">Sensor Test</a>
 
 <a href="magnets.html">Attachment Concepts</a>
