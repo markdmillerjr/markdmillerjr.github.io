@@ -82,24 +82,10 @@ I originally designed the battery system using a screw approach. A threaded rod 
 <img class="img-fluid" src="../img/uav_project/concepts/battery_mount_system_v1_cross-section1.png">
 <img class="img-fluid" src="../img/uav_project/concepts/battery_mount_system_v1_cross-section2.png">
 
-While this approach could work, it has a number of flaws. First it is a fairly complicated approach to merely attach a battery. Second, due to the vertical orientation of the major components, the volume of the fuselage to contain such a system is excessive. The battery has a height of only 2 inches, whereas the total height of the above assembly is over 7 inches. Therefore, I started looking for an approach that resulted in a more compact assembly.
-
-<h4>Version 2.0</h4>
-
-Version 2.0 was designed with a focus on remaining compact while still attaching the battery in an effective manner. However, a few issues were also discovered. First, version 2.0 relies on a sliding assembly, therefore friction is an issue. Second, the assembly is still a little large, 2.5 inches for the assembly.
-
-<img class="img-fluid" src="../img/uav_project/concepts/battery_mount_system_v2_iso.png">
-
-<h4>Version 3.0</h4>
-
-After I finished designing version 2.0, a thought occured to me, "what would a the battery system look like on a final production aircraft?" The biggest problem with both of the above approaches is that they are both mechanical solutions with a large number of components. Reliability becomes an issue on highly complex assemblies due to the increased points of failure. On an aircraft that is intended to fly continually for days or weeks at a time, designing a reliable system is imperative. Both version 1.0 and 2.0 are designed to solve a simple problem; attach and detach a battery rapidly, with minimal power, while supplying power to the aircraft. Therefore, I began looking at ways to eliminate all mechanical features in the design.
-
-I first started looking at using electromagnets to attach the batteries, however the large power requirements required to maintain the connection defeats the purpose of designing a system for maximum endurance. This is when I discovered <a href="Electropermanent_Magnets_Knaian.pdf">Electropermanent Magnets</a> and realized that they were perfect for my purpose.
-
-
 <h3>Complete Assembly</h3>
 
 Final renders showing completed assemblies. Note how large version 1.0 is compared to version 2.0 and 3.0.
+
 <h4>Version 1.0</h4>
 <img class="img-fluid" src="../img/uav_project/concepts/M-1 Docking System Iso.png">
 
@@ -113,5 +99,18 @@ Final renders showing completed assemblies. Note how large version 1.0 is compar
 
 <img class="img-fluid" src="../img/uav_project/concepts/M-1 Docking System Explode.png">
 
-<h5>Version 2.0</h5>
+While this approach could work, it has a number of flaws. First it is a fairly complicated approach to merely attach a battery. Second, due to the vertical orientation of the major components, the volume of the fuselage to contain such a system is excessive. The battery has a height of only 2 inches, whereas the total height of the above assembly is over 7 inches. Therefore, I started looking for an approach that resulted in a more compact assembly.
+
+<h4>Version 2.0</h4>
+
+Version 2.0 was designed with a focus on remaining compact while still attaching the battery in an effective manner. However, a few issues were also discovered. First, version 2.0 relies on a sliding assembly, therefore friction is an issue. Second, the assembly is still a little large, 2.5 inches for the assembly.
+
+<img class="img-fluid" src="../img/uav_project/concepts/battery_mount_system_v2_iso.png">
+
 <img class="img-fluid" src="../img/uav_project/concepts/version_2_iso.png">
+
+<h4>Version 3.0</h4>
+
+After I finished designing version 2.0, a thought occured to me, "what would a the battery system look like on a final production aircraft?" The biggest problem with both of the above approaches is that they are both mechanical solutions with a large number of components. Reliability becomes an issue on highly complex assemblies due to the increased points of failure. On an aircraft that is intended to fly continually for days or weeks at a time, designing a reliable system is imperative. Both version 1.0 and 2.0 are designed to solve a simple problem; attach and detach a battery rapidly, with minimal power, while supplying power to the aircraft. Therefore, I began looking at ways to eliminate all mechanical features in the design.
+
+I first started looking at using electromagnets to attach the batteries, however the large power requirements required to maintain the connection defeats the purpose of designing a system for maximum endurance. This is when I discovered <a href="Electropermanent_Magnets_Knaian.pdf">Electropermanent Magnets</a> and realized that they were perfect for my purpose.
