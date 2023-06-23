@@ -1,7 +1,7 @@
 ---
 layout: project
 type: project
-image: img/uav_project/Combined_Aircraft.png
+image: img/uav_project/Combined Aircraft-Undocked Iso.png
 title: "UAV Project"
 date: 2019
 published: True
@@ -16,10 +16,10 @@ labels:
   - Control System Design
   - Electric Motor Design
   - Data Acquisition and Analysis
-summary: "An independent project where I am designing an autonomous UAV capable of flying 24/7 by performing an in-flight battery transfer. "
+summary: "An autonomous UAV capable of flying 24/7 by performing an in-flight battery swap with a quadcopter. "
 ---
 
-<img class="img-fluid" src="../img/uav_project/Combined_Aircraft.png">
+<img class="img-fluid" src="../img/uav_project/Combined Aircraft-Undocked Iso.png">
 
 <h3>Project Overview</h3>
 
@@ -29,4 +29,4 @@ summary: "An independent project where I am designing an autonomous UAV capable 
 
 <a href="uav_sensor_test.html">Sensor Test</a>
 
-<a href="magnets.html">Attachment Concepts</a>
+<!-- <a href="magnets.html">Attachment Concepts</a> -->

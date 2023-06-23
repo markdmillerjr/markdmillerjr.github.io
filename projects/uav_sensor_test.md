@@ -25,6 +25,15 @@ While the LIDAR has the required accuracy, the minimum distance of 5cm is too la
 Of the 3 regions, the short distance is the most important because it is the zone where the final docking is performed. Therefore, a high degree of accuracy and precision is required to ensure a repeatable system. To develop a precise method of control, testing is necessary to determine the optimal placement of sensors and whether the sensors can accurately detect movement.
 
 <h4>Test Concept</h4>
+The initial concept consisted with sensors mounted on a pivot on both sides of the M-1 and R-1 models. The idea was to ensure accurate distance measurements within the Y-Z plane of the two test pieces. The next iteration would involve sensors mounted on pivots on the front and rear of the M-1 and R-1 models to get measurements within the X-Z plane. However, this configuration doesn't account for any rotation outside of these planes. 
+
+The next iteration consisted of sensors mounted in a "X" pattern on R-1 to easily account for any changes in rotation, and the distance measurements were obtained by adjusting the angle of the sensors relative to the M-1 model.
+
+<div class="text-center p-2">
+	<img width="600px" src="../img/uav_project/sensor_test/sensor_test_v1.png">
+	<img width="600px" src="../img/uav_project/sensor_test/sensor_test_v2.png">
+</div>
+
 For an initial test, I wanted to see how much the measured distance deviated from the actual distance of the model. A test rig was constructed to hold the M-1 model steady at a fixed height above the R-1 model. The movement of R-1 was limited along the X-Y axis by following increments marked on the grid of a foam board. This allowed the measured ToF distance to be compared with the actual location marked on the board.
 
 <h5>Sketch of Test Rig</h5>

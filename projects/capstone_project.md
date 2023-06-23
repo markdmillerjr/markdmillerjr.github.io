@@ -10,7 +10,7 @@ labels:
   - 3D Modeling
   - 3D Printing
   - Wind-Tunnel Testing
-summary: "Senior capstone project where we designed a supersonic business jet capable of 7,500NM at Mach 2.2 with 80 passengers."
+summary: "Senior capstone project where we designed a supersonic business jet capable of traveling 7,500NM at Mach 2.2 with 80 passengers."
 ---
 
 <img class="img-fluid" src="../img/capstone/Top.png">
