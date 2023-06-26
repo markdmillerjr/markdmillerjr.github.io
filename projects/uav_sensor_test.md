@@ -66,7 +66,7 @@ Solidworks was used to create the models and for rendering of the final assembly
 <br>
 
 <h5>3D Printed Test Rig</h5>
-The test rig and models of M-1 and R-1 were 3D printed with a Formlabs Form 3 3D printer. The M-1 and R-1 models were printed with Formlabs Rigid Resin and the test rig components were printed with Formlabs Tough 2000 resin. Also the stoppers at the end of the support shafts were printed with Formlabs Durable resin.
+The test rig and models of M-1 and R-1 were 3D printed with a Formlabs Form 3 3D printer. The M-1 and R-1 models were printed with Formlabs Rigid 4000 Resin and the test rig components were printed with Formlabs Tough 2000 resin. Also the stoppers at the end of the support shafts were printed with Formlabs Durable resin.
 <div class="text-center p-2">
 	<img class="img-fluid" src="../img/uav_project/sensor_test/3d_printed_model.png">
 </div>
