@@ -25,16 +25,29 @@ While the LIDAR has the required accuracy, the minimum distance of 5cm is too la
 Of the 3 regions, the short distance is the most important because it is the zone where the final docking is performed. Therefore, a high degree of accuracy and precision is required to ensure a repeatable system. To develop a precise method of control, testing is necessary to determine the optimal placement of sensors and whether the sensors can accurately detect movement.
 
 <h4>Test Concept</h4>
-The initial concept consisted with sensors mounted on a pivot on both sides of the M-1 and R-1 models. The idea was to ensure accurate distance measurements within the Y-Z plane of the two test pieces. The next iteration would involve sensors mounted on pivots on the front and rear of the M-1 and R-1 models to get measurements within the X-Z plane. However, this configuration doesn't account for any rotation outside of these planes. 
+The initial concept consisted with sensors mounted on a pivot on both sides of the M-1 and R-1 models. The idea was that because the resolution of the ToF sensors was only $$\pm$$ 5mm, if two sensors are with a offset between them, a resolution equal to the offset is possible.
 
-The next iteration consisted of sensors mounted in a "X" pattern on R-1 to easily account for any changes in rotation, and the distance measurements were obtained by adjusting the angle of the sensors relative to the M-1 model.
+<h6>Version 1.0 Sketch</h6>
+<div class="text-center p-2">
+	<img class="img-fluid" src="../img/uav_project/sensor_test/SCAN0033.png">
+</div>
 
+Unfortunately, this concept only works if the two models are within the same plane so that the distances can be easily measured. The next iteration utilized four sensors mounted in an "X" pattern to account for the models being out of plane. Also for the second iteration, an adjustment of the required resolution was relaxed due to no longer using a mechanical interface for the aircraft docking. 
+
+<h6>Version 2.0 Sketch</h6>
+<div class="text-center p-2">
+	<img class="img-fluid" src="../img/uav_project/sensor_test/SCAN0034.png">
+</div>
+
+With four sensors covering each corner of the M-1 aircraft, a higher degree of fidelity is possible then with only one or two sensors. For simplicity of the initial test, the sensors only rotate parallel to the arm. Rotation perpendicular to the arm will be possible with the next test with version 3.0.
+
+<h6>3D Printed Models - Version 1.0 and 2.0</h6>
 <div class="text-center p-2">
 	<img width="600px" src="../img/uav_project/sensor_test/sensor_test_v1.png">
 	<img width="600px" src="../img/uav_project/sensor_test/sensor_test_v2.png">
 </div>
 
-For an initial test, I wanted to see how much the measured distance deviated from the actual distance of the model. A test rig was constructed to hold the M-1 model steady at a fixed height above the R-1 model. The movement of R-1 was limited along the X-Y axis by following increments marked on the grid of a foam board. This allowed the measured ToF distance to be compared with the actual location marked on the board.
+For the initial test, the deviation between the measured distance and the actual distance was determined. A test rig was constructed to hold the M-1 model steady at a fixed height above the R-1 model. The movement of R-1 was limited along the X-Y axis by following increments marked on the grid of a foam board. This allowed the measured ToF distance to be compared with the actual location marked on the board.
 
 <h5>Sketch of Test Rig</h5>
 <div class="text-center p-2">
@@ -44,7 +57,8 @@ For an initial test, I wanted to see how much the measured distance deviated fro
 
 <br>
 
-<h5>CAD model of Test Rig</h5>
+<h5>CAD Model of Test Rig</h5>
+Solidworks was used to create the models and for rendering of the final assembly. Modeling the workbench was done to ensure the test rig fit within the required dimensions (mounted to the basement ceiling). It also allowed for easy reference of the overall size and scale.
 <div class="text-center p-2">
 	<img class="img-fluid" src="../img/uav_project/sensor_test/sensor_test_rig2.png">
 </div>
@@ -52,6 +66,7 @@ For an initial test, I wanted to see how much the measured distance deviated fro
 <br>
 
 <h5>3D Printed Test Rig</h5>
+The test rig and models of M-1 and R-1 were 3D printed with a Formlabs Form 3 3D printer. The M-1 and R-1 models were printed with Formlabs Rigid Resin and the test rig components were printed with Formlabs Tough 2000 resin. Also the stoppers at the end of the support shafts were printed with Formlabs Durable resin.
 <div class="text-center p-2">
 	<img class="img-fluid" src="../img/uav_project/sensor_test/3d_printed_model.png">
 </div>
@@ -59,17 +74,17 @@ For an initial test, I wanted to see how much the measured distance deviated fro
 <br>
 
 <h4>Test Setup</h4>
-To collect the data, an <a href="https://www.adafruit.com/product/3857">Adafruit Feather M4 Express</a> with a <a href="https://www.adafruit.com/product/2922">Adalogger FeatherWing - RTC + SD Add-on</a> and <a href="https://www.adafruit.com/product/2693">SD Memory Card</a> were used. The Feather M4 ran the CircuitPython code to initialize the sensors and write the data to the SD card. The Adalogger housed the SD card and real-time clock. The SD card stored the data to be easily transferred to a computer after the test.  
+To collect the data, an <a href="https://www.adafruit.com/product/3857">Adafruit Feather M4 Express</a> with a <a href="https://www.adafruit.com/product/2922">Adalogger FeatherWing - RTC + SD Add-on</a> and <a href="https://www.adafruit.com/product/2693">SD Memory Card</a> were used. The Feather M4 ran CircuitPython to initialize the sensors and write the data to the SD card. The Adalogger housed the SD card and real-time clock. The SD card stored the data to be easily transferred to the computer after the test.  
 
 <div class="text-center p-2">
 	<img class="img-fluid" src="../img/uav_project/sensor_test/test_setup_callouts.png">
 </div>
 
 <div class="text-center p-2">
-	<img width="400" src="../img/uav_project/sensor_test/Test Data-1.jpg">
+	<img width="400" src="../img/uav_project/sensor_test/test_procedure.png">
 </div>
 
-The Feather M4 can easily receive data through its I2C port, however its only possible to connect a single address at a time to the Feather. To receive data from multiple sensors, a multiplexer is necessary to select the unique addresses for each sensor. The following code block initializes the Front Right(FR) sensor. Sensors, Back Right(BR), Front Left(FL), and Front Right(FR) are initialized in the same way.
+The Feather M4 can easily receive data through its I2C port, however its only possible to connect a single address at a time to the Feather. To receive data from multiple sensors, a multiplexer is necessary to select the unique addresses for each sensor. The following code block initializes the Front Right(FR) sensor. Sensors, Back Right(BR), Front Left(FL), and Back Left(BL) are initialized in the same way.
 
 ```python
 	def ToF_Sensor_FR():
@@ -80,7 +95,7 @@ The Feather M4 can easily receive data through its I2C port, however its only po
 		tca = adafruit_tca9548a.TCA9548A(i2c)
 
 		# Set the ToF sensor to the Mux
-		vl53= adafruit_vl53l4cd.VL53L4CD(tca[3])
+		vl53= adafruit_vl53l4cd.VL53L4CD(tca[2])
 
 		vl53.inter_measurement = 0
 		vl53.timing_budget = 10
@@ -102,7 +117,7 @@ The Feather M4 can easily receive data through its I2C port, however its only po
 		# Return distance value
 		return vl53.distance
 ```
-Code block that loops through each sensor. Outputs a plot on the Mu python editor to see movements of R-1 in near real-time and writes the sensor reading to a text file. Also, grabs a timestamp of the sensor reading and writes it to a text file as well.
+Code block that loops through each sensor. Outputs a plot on the Mu Python editor to see movements of R-1 in near real-time and writes the sensor reading to a text file. Also, it grabs a timestamp of the sensor reading and writes it to a text file as well.
 
 ```python
 	busInc = 0
@@ -114,32 +129,32 @@ Code block that loops through each sensor. Outputs a plot on the Mu python edito
 		# Initialize Sensor
 		print("Bus number: ", busInc)
 		if busInc == 0:
-			BR = ToF_Sensor_BR()
-
-			# Store data on SD card
-			with open("/sd/sensor_test_data.txt", "a") as f:
-				f.write("%0.1f\t" % BR)
-
-		elif busInc == 1:
 			BL = ToF_Sensor_BL()
 
 			# Store data on SD card
 			with open("/sd/sensor_test_data.txt", "a") as f:
 				f.write("%0.1f\t" % BL)
 
+		elif busInc == 1:
+			BR = ToF_Sensor_BR()
+
+			# Store data on SD card
+			with open("/sd/sensor_test_data.txt", "a") as f:
+				f.write("%0.1f\t" % BR)
+
 		elif busInc == 2:
+			FR = ToF_Sensor_FR()
+
+			# Store data on SD card
+			with open("/sd/sensor_test_data.txt", "a") as f:
+				f.write("%0.1f\t" % FR)
+
+		elif busInc == 3:
 			FL = ToF_Sensor_FL()
 
 			# Store data on SD card
 			with open("/sd/sensor_test_data.txt", "a") as f:
 				f.write("%0.1f\t" % FL)
-
-		elif busInc == 2:
-			FL = ToF_Sensor_FR()
-
-			# Store data on SD card
-			with open("/sd/sensor_test_data.txt", "a") as f:
-				f.write("%0.1f\t" % FR)
 
 		# Plot on X-Y scale
 		print(
@@ -189,6 +204,35 @@ Code block that loops through each sensor. Outputs a plot on the Mu python edito
 			f.write("\n")
 ```
 
+<h4>Test Data</h4>
+The data was inputted into Microsoft Excel for analysis. A sample output of the test data is shown below. The multiplexer cycles through the sensors every tenth of a second. Due to the slight lag in running through the FOR loop, the actual number of cycle completed is eight per second. After every loop a timestamp is shown indicating when the data was acquired. 
+
+<div class="text-center p-2">
+	<img width="400px" src="../img/uav_project/sensor_test/sample_data.png">
+</div>
+
+<h4>Data Analysis</h4>
+The results were graphed on a scatterplot and compared to the actual distances moved. The R-1 model was translated through four directions: <i>right</i>, <i>left</i>, <i>front</i>, and <i>back</i>. Each direction of translation is easily indicated as a hump on the graph below. As expected each sensor is grouped in a group of two depending on the offset. Moving from <i>right</i> to <i>left</i> groups sensors: BR/FR and BL/FL together. Moving from <i>front</i> to <i>back</i> groups sensors: FR/FL and BR/BL together.
+
+<div class="text-center p-2">
+	<img class="img-fluid" src="../img/uav_project/sensor_test/sensor_test_data.png">
+</div>
+
+Due to noise when the sensor is stationary, the measured distance from the target fluctuates about 1 mm around the actual distance. Therefore, in an attempt to isolate the knoise, the average distance rather then the maximum or minimum distance is used. Each reading has to be conterted into it's vector components to compare it wiith the actual distance moved. Each sensor is set at 46.7 degrees (the maximum angle based on existing CAD geometry). The X-Axis components can be found through the simple formula as shown below, where $$\theta_S$$ is the angle of the sensor. 
+
 $$
-X = {L \above{1pt} \cos(\theta_N)}
+X = {D \above{1pt} \cos(\theta_S)}
 $$
+
+As shown below, due to the placement of the sensors, the height of the M-1 model, and the angle of the sensors, any translations that don't see the laser touching the side of the M-1 model are not indicated. This causes the measured distance of R-1 to be lower than the actual distance, resulting in a significant percent difference between the measured and actual values.
+
+<div class="text-center p-2">
+	<img width="400px" src="../img/uav_project/sensor_test/centered.png">
+	<img width="400px" src="../img/uav_project/sensor_test/right offset.png">
+</div>
+
+<div class="text-center p-2">
+	<img width="600px" src="../img/uav_project/sensor_test/sensor_test_data_analysis.png">
+</div>
+
+
