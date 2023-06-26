@@ -3,7 +3,7 @@ layout: project
 type: project
 image: img/uav_project/Combined Aircraft-Undocked Iso.png
 title: "UAV Project"
-date: 2019
+date: 2019-present
 published: True
 labels:
   - 3D Modeling

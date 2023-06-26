@@ -3,13 +3,15 @@ layout: project
 type: project
 image: img/capstone/Top.png
 title: "Senior Capstone Project"
-date: 2017
+date: 2017-2018
 published: true
 labels:
   - Aircraft Design
   - 3D Modeling
   - 3D Printing
   - Wind-Tunnel Testing
+  - Data Analysis
+  - Technical Writing
 summary: "Senior capstone project where we designed a supersonic business jet capable of traveling 7,500NM at Mach 2.2 with 80 passengers."
 ---
 

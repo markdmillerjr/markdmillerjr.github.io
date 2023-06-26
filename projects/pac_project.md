@@ -3,7 +3,7 @@ layout: project
 type: project
 image: img/pac_project/pac_aircraft.png
 title: "Preliminary Aircraft Configurator"
-date: 2017
+date: 2017-present
 published: true
 labels:
   - Aircraft Design

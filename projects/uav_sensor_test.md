@@ -218,13 +218,13 @@ The results were graphed on a scatterplot and compared to the actual distances m
 	<img class="img-fluid" src="../img/uav_project/sensor_test/sensor_test_data.png">
 </div>
 
-Due to noise when the sensor is stationary, the measured distance from the target fluctuates about 1 mm around the actual distance. Therefore, in an attempt to isolate the knoise, the average distance rather then the maximum or minimum distance is used. Each reading has to be conterted into it's vector components to compare it wiith the actual distance moved. Each sensor is set at 46.7 degrees (the maximum angle based on existing CAD geometry). The X-Axis components can be found through the simple formula as shown below, where $$\theta_S$$ is the angle of the sensor. 
+Due to noise when the sensor is stationary, the measured distance from the target fluctuates about 1 mm around the actual distance. Therefore, in an attempt to isolate the noise, the average distance rather then the maximum or minimum distance is used. Each reading has to be conterted into it's vector components to compare it wiith the actual distance moved. Each sensor is set at 46.7 degrees (the maximum angle based on existing CAD geometry). The X-Axis component <i>X</i> can be found using geometry, where $$\theta_S$$ is the angle of the sensor and <i>D</i> is the measured distance from the sensor. 
 
 $$
 X = {D \above{1pt} \cos(\theta_S)}
 $$
 
-As shown below, due to the placement of the sensors, the height of the M-1 model, and the angle of the sensors, any translations that don't see the laser touching the side of the M-1 model are not indicated. This causes the measured distance of R-1 to be lower than the actual distance, resulting in a significant percent difference between the measured and actual values.
+As shown below, due to the placement of the sensors, the height of the M-1 model, and the angle of the sensors, any translations that don't have the laser touching the side of the M-1 model are not indicated. This causes the measured distance of R-1 to be lower than the actual distance, resulting in a significant percent difference between the measured and actual values.
 
 <div class="text-center p-2">
 	<img width="400px" src="../img/uav_project/sensor_test/centered.png">
@@ -235,4 +235,9 @@ As shown below, due to the placement of the sensors, the height of the M-1 model
 	<img width="600px" src="../img/uav_project/sensor_test/sensor_test_data_analysis.png">
 </div>
 
+<h4>Results</h4>
+Four ToF sensors were used to measure the position of the R-1 model relative to the M-1 model. The R-1 model was translated 5cm from its starting position of directly beneath M-1. It was moved parallel to the Right side first, moved back to the starting location and then moved along the Left side. After moving back to center, it was moved along the North side, then back to center, and finally along the Back side and then back to center.
 
+Based on the initial test performed, using a ToF sensor for precise positioning of the two aircraft is possible with a few modifications. First more degrees of rotation of the sensors is necessary to ensure the lasers are always on the M-1 model. Second, if the sensor is only facing the underside of M-1, any translations in M-1 or R-1 are not indicated. This is indicated by the large percent difference between the measured and actual values ranging from 33% to 58%. For instance, R-1 was offset 5cm to the right of M-1. However, the BR ToF only indicated 3cm of offset, while the FR ToF indicated 2.75cm of offset. Rapid positioning of the ToF would more accurately indicate any translations by finding the edges of M-1 to determine when M-1 or R-1 move. 
+
+Third, implementing a scanning function to scan the outer surface of M-1 would increase the precision due to having multiple readings per sensor, rather then only two each. In other words, instead of cycling through the sensors every tenth of a second with the sensors only looking at the same point, have the sensors make multiple passes across the entire outer surface. This ensures more precise readings by continually cross-checking each value with a previous value.

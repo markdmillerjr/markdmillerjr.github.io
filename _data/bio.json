@@ -17,7 +17,8 @@
     { "name": "3D Modeling" },
     { "name": "Electric Motor Design" },
     { "name": "PCB Design" },
-    { "name": "Pyhon"},
+    { "name": "Python"},
+    { "name": "MATLAB"},
     { "name": "3D Printing"},
     { "name": "Carpentry"}
   ],
@@ -51,7 +52,10 @@
       "summary": "Supervisor overseeing flow of freight at site",
       "highlights": [
         "Identify and train strong candidates for team lead positions, two promoted to L3 positions",
-        "Drive improvements in team efficiency and morale"
+        "Supervised 20+ associates on 3 sort lanes simultaneously",
+        "Lead the small-sort department and oversaw improvements in morale and efficiency",
+        "Currently supervising the flow across each sort lane ensuring the freight is processed efficiently",
+        "Identify areas of improvements and make recommendations to management and engineers",
       ]
     },
     {
@@ -61,8 +65,18 @@
       "endDate": "2021-03-12",
       "summary": "Team member assisting with sort operation ",
       "highlights": [
-        "Trained in leading sort lane under supervision of process assistant",
+        "Trained in leading a sort lane under supervision of process assistant by loading/closing/opening the correct number of ULD's per aircraft",
         "Selected to train new team members in day-to-day operations"
+      ]
+    },
+    {
+      "company": "Lowe's Companies, Inc.",
+      "position": "Day Stocker",
+      "startDate": "2019-05-12",
+      "endDate": "2019-10-12",
+      "summary": "Team member assisting with sort operation ",
+      "highlights": [
+        "Stocked new freight onto shelves and assisted with receiving department"
       ]
     }
   ],
@@ -79,7 +93,7 @@
       ]
     },
     {
-      "organization": "Independent Study - Tandem Wing Segment Wind Tunnel Model",
+      "organization": "Tandem Wing Segment Wind Tunnel Model",
       "website": "",
       "position": "Individual Project with mentor",
       "startDate": "2016-04",
@@ -90,8 +104,8 @@
         "The results were presented at the annual AAAS scientific conference."
       ]
     },
-        {
-      "organization": "Independent Project - Unmanned Aerial System",
+    {
+      "organization": "Unmanned Aerial System",
       "website": "",
       "position": "Individual Project",
       "startDate": "2019-08",
@@ -101,7 +115,19 @@
         "Designing a dual aircraft UAS system capable of performing an autonomous in-flight battery transfer.",
         "The design is utilizing custom motors, off-the-self sensors, 3D printed components, electropermanent magnets, a carbon-fibre chassis, and an onboard computer running a ML algorithm to control the aircraft."
       ]
-    }
+    },
+    {
+      "organization": "MATLAB Project",
+      "website": "https://github.com/markdmillerjr/PAC-Project",
+      "position": "Individual Project",
+      "startDate": "2017-08",
+      "endDate": "Present",
+      "summary": "",
+      "highlights": [
+        "Designing a MATLAB program to perform preliminary calculations for conceptual designs.",
+        "Utilizes a GUI to rapidly visualize changes as they happen."
+      ]
+    },
   ],
   "awards": [
     {
