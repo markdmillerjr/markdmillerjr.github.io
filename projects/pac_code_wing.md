@@ -10,7 +10,7 @@ summary: ""
 ---
 <h3>Wing Planform Modification Code</h3>
 
-The second, the ability to create a multi segment wing was also considerably more involved than originally thought. Though once I began to seriously consider the problem and work through each step, the solution became clear. The biggest problem I faced with writing the wing planform code was in reordering the points of each segment. The problem essentially revolves around matrix manipulation. Everytime a point is laid down for a new segment, it's position along the wingspan needs to be stored so that the wing is remodeled with the correct number of segments. 
+The second, the ability to create a multi segment wing was also fairly complex. The biggest problem I faced with writing the wing segment code was in reordering the points of each segment. The problem essentially revolves around matrix manipulation. Everytime a point is laid down for a new segment, it's position along the wingspan needs to be stored so that the wing is remodeled with the correct number of segments. 
 
 Similar to how MATLAB plotted the wing with a FOR loop from the <b>Airfoil</b> code, four points are needed to complete a wing segment. Therefore, if a single point is placed along the leading edge of the wing, a similar point needs to be placed at the same location along the span on the trailing edge. This ensures MATLAB can build the wing with two complete segments. 
 
@@ -22,6 +22,7 @@ The sketches below are the basic theories behind this process.
 Below is the code that follows the idea laid out from the sketches above. It reorders the points for each segment and determines the slope of each segment to determine the modeling of a complex multi-segment wing.
 
 <h4>Wing Planform Code</h4>
+Following code snippet assumes that points have been placed on both the leading and trailing edges, that way it won't encounter problems with empty arrays. If points are only placed along the leading or trailing edge, not both, a code snippet below this is run.
 
 ```matlab
 % Wing Preview
@@ -351,6 +352,7 @@ For brevity, I removed the trailing edge code as it is identical to the leading 
             tpArray = [0 tpSub];
         end
         
+        % Determine taper of each segment
         tpArray = (sortedTEPointsX' - sortedLEPointsX') / rootChord;
         
         if storageArrayP1 == 0
@@ -359,14 +361,18 @@ For brevity, I removed the trailing edge code as it is identical to the leading 
             storageArrayP2 = [];
         end
         
+        % Initialize array for final storage of leading edge points
         sorted_airfoil_coords_xLE = zeros(comboAirfoilSize(1),length(pointLE));
         
+        % Create array of final leading edge points 
         airfoil_coords_xLE = comboAirfoil_coords_xRoot * rootChord * tpArray + sortedLEPointsX';
             
+        % Cut the above array in half to only look at the top surface first
         sub_airfoil_coords_xLE = airfoil_coords_xLE(ceil(comboAirfoilSize(1)/2),:);
 
         findLEPointsX = zeros(1,length(pointLE));
         
+        % Determine the final position of the leading edge points
         for inc = 1:length(pointLE)
             findLEPointsX(inc) = find(sub_airfoil_coords_xLE(inc) == sortedLEPointsX, 1 );
             sorted_airfoil_coords_xLE(:,inc) = airfoil_coords_xLE(:,findLEPointsX(inc));
@@ -418,7 +424,10 @@ For brevity, I removed the trailing edge code as it is identical to the leading 
         if tempStorageArrayYSort2 == 0
             tempStorageArrayYSort2 = [];
         end
-        
+```        
+Following code snippet is for if a point is the first one placed on either the leading or trailing edge. The issue with the above code is that assumes a nonempty array for both leading and trailing edge points. Therefore, need to only manipulate arrays for only leading edge points or for only trailing edge points, not both.
+
+```matlab
 if isempty(storageArrayP1) == 1 && isempty(storageArrayP2) == 1    
     switch(lineSelected)
         %% 1 Leading Edge Modification
@@ -582,7 +591,10 @@ yCoords = yCoordsBoth;
 zCoords = zCoordsBoth;
 
 %% ------------------------------------------------------------------------
+```
+Plot the final multi segment wing. If it's the first time creating the wing, no points are stored, so only need to create the wing with a single segment.
 
+```matlab
 if isempty(storageArrayP1) ~= 1 || isempty(storageArrayP2) ~= 1
 
     delete(wingPreviewLeft);
@@ -660,6 +672,7 @@ YWR2 = (zeros(comboAirfoilSize) + b/2);
 ZW2=(XW4-XW2)*sind(i_w)+(b/2)*tand(Gam);
 ZWR2 = ((comboAirfoil_coords_yTip+ZW2).*tipChord);    
 
+% The ends of the airfoil are plotted at the end, because the surface can't render a Fill
 rightAirfoil = fill3(previewAxes,XWR2,YWR2,ZWR2,[.5 .5 .5]);
 leftAirfoil  = fill3(previewAxes,XWR2,-YWR2,ZWR2,[.5 .5 .5]);
 ```
