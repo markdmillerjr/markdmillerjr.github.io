@@ -218,7 +218,7 @@ The results were graphed on a scatterplot and compared to the actual distances m
 	<img class="img-fluid" src="../img/uav_project/sensor_test/sensor_test_data.png">
 </div>
 
-Due to noise when the sensor is stationary, the measured distance from the target fluctuates about 1 mm around the actual distance. Therefore, in an attempt to isolate the noise, the average distance rather then the maximum or minimum distance is used. Each reading has to be conterted into it's vector components to compare it with the actual distance moved. Each sensor is set at 46.7 degrees (the maximum angle based on existing CAD geometry). The X-Axis component <i>X</i> can be found using geometry, where $$\theta_S$$ is the angle of the sensor and <i>D</i> is the measured distance from the sensor. 
+Due to noise when the sensor is stationary, the measured distance from the target fluctuates about 1 mm around the actual distance. Therefore, in an attempt to isolate the noise, the average distance rather then the maximum or minimum distance is used. Each reading has to be conterted into it's vector components to compare it with the actual distance moved. Each sensor is set at 46.7 $$\deg$$ to the bottom of the model (the maximum angle based on existing CAD geometry). The X-Axis component <i>X</i> can be found using geometry, where $$\theta_S$$ is the angle of the sensor and <i>D</i> is the distance measured by the sensor.
 
 $$
 X = {D \above{1pt} \cos(\theta_S)}
