@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content=" | Mark Miller Jr. | Professional Portfolio">
+    <meta name="description" content="">
+    <meta name="image" content="https://github.com/markdmillerjr.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Mark Miller Jr. | Professional Portfolio">
+    <meta property="og:url" content="https://markdmillerjr.github.io/projects/pac_concept.html">
+    <meta property="og:title" content=" | Mark Miller Jr. | Professional Portfolio">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://github.com/markdmillerjr.png">
+    <link rel="shortcut icon" href="/shockwave.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/techfolio-theme/rubik.css">
+    <link rel="stylesheet" type="text/css" href="/css/rouge/github.css">
+    <!-- Load MathJax if 'mathjax: true' is found in your _config.yml. -->
+    
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+
+    <title> | Mark Miller Jr. | Professional Portfolio</title>
+  </head>
+  <body>
+  <header class="navbar navbar-expand navbar-light bg-light bg-gradient border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Mark Miller</a>
+    <div class="ms-auto">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <a class="nav-link" href="/#projects">Projects</a>
+        <a class="nav-link" href="/resume.html">Resume</a>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="container py-4">
+  <h1 class="display-4"></h1>
+ <h3>Concept</h3>
+
+<p>To design an aircraft an initial set of requirements are required. These are usually given in the RFP (Request for Proposal), however they can also be supplied by the aircraft designer to design an aircraft to fulfill a certain role. Therefore, the first step in PAC is inputting a set of requirements to design the aircraft around.</p>
+
+<h5>Mission Parameters</h5>
+<p>Under “Mission Parameters”, the user has options that are both generic and specific to each aircraft type. Parameters such as <i>range</i>, <i>takeoff length</i>, and <i>service ceiling</i> are the same for each aircraft type. While, parameters such as <i>passengers</i> or <i>maximum mach number</i> are specific to transport and military aircraft respectively.</p>
+
+<p>The takeoff weight estimation is calculated both from the historical data that is tabulated below and specific for each aircraft type, and the inputted aircraft parameters.</p>
+
+<p><img class="img-fluid" src="../img/pac_project/mission.png" /></p>
+
+<p>Once the estimate for the takeoff weight is determined, the constraint analysis is constructed and is used to determine the wing loading and thrust loading the aircraft is designed around.
+<img class="img-fluid" src="../img/pac_project/constraint_analysis.png" /></p>
+
+<h5>Engine Parameters</h5>
+<p>Once an estimate for the thrust loading is determined, the engine that meets the necessary requirements can be selected under the “Engine” tab. Multiple engine manufacturers are listed and for each engine that has enough data to be used in PAC, that engine is tabulated as well.
+<img class="img-fluid" src="../img/pac_project/engine.png" /></p>
+
+<h5>Wing Parameters</h5>
+<p>Once the wing loading estimate is found, the root and tip airfoils can be selected and the initial wing designed. From the wing loading, an estimate for the required wing area to generate sufficient lift is found. 
+<img class="img-fluid" src="../img/pac_project/airfoil_root.png" /></p>
+
+<p><img class="img-fluid" src="../img/pac_project/airfoil_tip.png" /></p>
+
+<p><img class="img-fluid" src="../img/pac_project/wing_initial.png" /></p>
+
+<p>Under the “Final Wing Design” tab, the user can modify the planform shape of the wing. This allows the user to design a multi-segment wing relatively easily.
+<img class="img-fluid" src="../img/pac_project/wing_final.png" /></p>
+
+<h5>Fuselage Parameters</h5>
+<p>After the wing is designed, the fuselage can be modeled. After specifying the fuselage length, radius, and nosecone length and tailcone length, the completed fuselage is shown. Currently only the “Fuselage Requirements” tab works. Future versions will allow for complex fuselage shapes, similar to the “Final Wing Design” tab.
+<img class="img-fluid" src="../img/pac_project/fuselage.png" /></p>
+
+<h5>Empennage Parameters</h5>
+<p>After the fuselage is designed, the empennage can also be designed. Three different options can be selected: <i>Conventional</i>, <i>Cruciform</i>, or <i>T-Tail</i>. The design parameters for the horizontal and vertical tail are the same as the wing, with the vertical tail being half a wing. <br />
+<img class="img-fluid" src="../img/pac_project/empennage.png" /></p>
+
+<h5>Aircraft Parameters</h5>
+<p>Finally, after designing all the components, the model of the aircraft is shown. Parameters such as wing location and distance from tail can be set. Also the designer can specify the type of engine (turboprop engines are not currently modeled), number of engines, the engine location from the leading edge, location along span and for multiple engines, distance between each engine.
+<img class="img-fluid" src="../img/pac_project/aircraft.png" /></p>
+
+</div>
+
+<footer class="navbar navbar-expand navbar-light bg-light bg-gradient border-top">
+  <div class="container-fluid">
+    <div class="ms-auto">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <small><a class="nav-link" href="https://www.youtube.com/watch?v=mfQjG4t4M08">Engineering is awesome!</a></small>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>
