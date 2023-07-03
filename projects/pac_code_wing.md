@@ -14,7 +14,11 @@ The second, the ability to create a multi segment wing was also fairly complex. 
 
 Similar to how MATLAB plotted the wing with a FOR loop from the <b>Airfoil</b> code, four points are needed to complete a wing segment. Therefore, if a single point is placed along the leading edge of the wing, a similar point needs to be placed at the same location along the span on the trailing edge. This ensures MATLAB can build the wing with two complete segments. 
 
-The sketches below are the basic theories behind this process.
+Below is an example of an unmodified wing planform. At the end of this code, the wing will be separated into ten segments, five for each half wing span.
+<h4>Unmodified Wing Planform</h4>
+<img class="img-fluid" src="../img/pac_project/wing_planform_mod/wing_section_0.png">
+
+The sketches below are the basic theories behind the process described above. Each point that is placed along the wing is stored into an array to determine the order that the wing should be modeled.
 <img class="img-fluid" src="../img/pac_project/wing_planform_mod/SCAN0035.png">
 <img class="img-fluid" src="../img/pac_project/wing_planform_mod/SCAN0037.png">
 <img class="img-fluid" src="../img/pac_project/wing_planform_mod/SCAN0036.png">
@@ -425,7 +429,7 @@ For brevity, I removed the trailing edge code as it is identical to the leading 
             tempStorageArrayYSort2 = [];
         end
 ```        
-Following code snippet is for if a point is the first one placed on either the leading or trailing edge. The issue with the above code is that assumes a nonempty array for both leading and trailing edge points. Therefore, need to only manipulate arrays for only leading edge points or for only trailing edge points, not both.
+Following code snippet is for if a point is the first one placed on either the leading or trailing edge. The issue with the above code is that it assumes a nonempty array for both leading and trailing edge points. Therefore, only need to manipulate arrays for the leading edge points or for the trailing edge points, not both.
 
 ```matlab
 if isempty(storageArrayP1) == 1 && isempty(storageArrayP2) == 1    
@@ -678,10 +682,20 @@ leftAirfoil  = fill3(previewAxes,XWR2,-YWR2,ZWR2,[.5 .5 .5]);
 ```
 Below is an example of this concept. Note the wing is modified from Left to Right. Also similar to the <b>Airfoil</b> code, when placing points on both the leading and trailing edges, the slope of these points is needed to ensure the wing is modeled properly.
 
-<h4>Wing Planform Outline Example</h4>
+<h4>Modified Wing Planform Outline</h4>
 <div class="text-center p-4">
     <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_LE_1.png" class="img-thumbnail" >
     <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_LE_2.png" class="img-thumbnail" >
     <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_LE_2_TE_1.png" class="img-thumbnail" >
     <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_LE_2_TE_2.png" class="img-thumbnail" >
 </div>
+
+<h4>Modified Wing Planform</h4>
+<div class="text-center p-4">
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_1.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_2.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_3.png" class="img-thumbnail" >
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_4.png" class="img-thumbnail" >
+</div>
+
+Obviously, the wing above is only used to demonstrate the planform modification code. Any aerodynamic, stability or structural changes are not currently taken into account. However, this code is necessary to allow for tracing the outline of an existing aircraft design into PAC and reverse engineering it's capabilities(future feature). For the simple empirical methods that PAC uses, an adjustment of the overall wing surface area by summing the surface areas of each wing segment together could be used for a very rough empirical estimate of the effects of such a wing.
