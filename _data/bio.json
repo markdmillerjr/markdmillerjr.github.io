@@ -1,0 +1,165 @@
+{
+  "basics": {
+    "name": "Mark Miller",
+    "label": "Aerospace Engineer",
+    "picture": "https://github.com/markdmillerjr.png",
+    "email": "markdmiller40@outlook.com",
+    "website": "https://markdmillerjr.github.io",
+    "summary": "Engineer with a passion for solving complex problems through 3D design, programming, and rapid prototyping.",
+    "location": { "address": "", "postalCode": "", "city": "Rockford", "countryCode": "USA", "region": "Illinois" },
+    "profiles": [
+      { "network": "github", "username": "markdmillerjr", "url": "http://github.com/markdmillerjr" },
+      { "network": "linkedin", "username": "markmiller", "url": "https://www.linkedin.com/in/mark-miller-8847b7120/" }
+    ]
+  },
+  "interests": [
+    { "name": "Aircraft Design" },
+    { "name": "3D Modeling" },
+    { "name": "Electric Motor Design" },
+    { "name": "PCB Design" },
+    { "name": "Python"},
+    { "name": "MATLAB"},
+    { "name": "3D Printing"},
+    { "name": "Carpentry"}
+  ],
+  "skills": [
+    {
+      "name": "Languages",
+      "keywords": [ "MATLAB", "Python" ]
+    },
+    {
+      "name": "Technical",
+      "keywords": [ "SolidWorks", "Altium Designer", "Microsoft Office", "3D Printing", "Miniature Machining(Mill/Lathe)", "Carpentry"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Embry-Riddle Aeronautical University, Prescott, AZ",
+      "area": "Aerospace Engineering, 2018",
+      "studyType": "B.S.",
+      "startDate": "2014-09-14",
+      "endDate": "2018-05-03",
+      "courses": [
+      ]
+    }
+  ],
+  "work": [
+    {
+      "company": "Amazon.com, Inc. (Amazon Air)",
+      "position": "Data Analyst L3",
+      "startDate": "2025-06-01",
+      "endDate": "Present",
+      "summary": "Data Analyst bridging site defects and deep diving problems",
+      "highlights": [
+        "Perform root cause analysis on package defects",
+        "Wrote a macro to determine highest performing lane",
+        "Wrote a macro to easily identify changes made to warehouse setup",
+        "Developed improvements to warehouse setup to improve employee operation"
+      ]
+    },
+    {
+      "company": "Amazon.com, Inc. (Amazon Air)",
+      "position": "Process Assistant L3",
+      "startDate": "2021-03-12",
+      "endDate": "2025-06-01",
+      "summary": "Supervisor overseeing flow of freight at site",
+      "highlights": [
+        "Identify and train strong candidates for team lead positions, two promoted to L3 positions",
+        "Supervised 20+ associates on 3 sort lanes simultaneously",
+        "Lead the small-sort department and oversaw improvements in morale and efficiency",
+        "Currently supervising the flow across each sort lane ensuring the freight is processed efficiently",
+        "Identify areas of improvements and make recommendations to management and engineers"
+      ]
+    },
+    {
+      "company": "Amazon.com, Inc. (Amazon Air)",
+      "position": "Sort Associate L1",
+      "startDate": "2020-04-23",
+      "endDate": "2021-03-12",
+      "summary": "Team member assisting with sort operation ",
+      "highlights": [
+        "Trained in leading a sort lane under supervision of process assistant by loading/closing/opening the correct number of ULD's per aircraft",
+        "Selected to train new team members in day-to-day operations"
+      ]
+    },
+    {
+      "company": "Lowe's Companies, Inc.",
+      "position": "Day Stocker",
+      "startDate": "2019-05-12",
+      "endDate": "2019-10-12",
+      "summary": "Team member assisting with sort operation ",
+      "highlights": [
+        "Stocked new freight onto shelves and assisted with receiving department"
+      ]
+    }
+  ],
+  "volunteer": [
+    {
+      "organization": "Senior Capstone Design Project - Supersonic Business Jet",
+      "website": "",
+      "position": "Aerodynamics Lead",
+      "startDate": "2017-08",
+      "endDate": "2018-05",
+      "summary": "Aerodynamics lead of a 11-person team",
+      "highlights": [
+        "Performed both subsonic and supersonic aerodynamic calculations for the wing, empennage, and fuselage, performed performance calculations to ensure adherence to the RFP, CFR, and ICAO requirements"
+      ]
+    },
+    {
+      "organization": "Tandem Wing Segment Wind Tunnel Model",
+      "website": "",
+      "position": "Individual Project with mentor",
+      "startDate": "2016-04",
+      "endDate": "2016-06",
+      "summary": "",
+      "highlights": [
+        "Designed, built, tested, and presented a wind tunnel model analyzing the feasibility of two wing segments in tandem.",
+        "The results were presented at the annual AAAS scientific conference."
+      ]
+    },
+    {
+      "organization": "Unmanned Aerial System",
+      "website": "",
+      "position": "Individual Project",
+      "startDate": "2019-08",
+      "endDate": "Present",
+      "summary": "",
+      "highlights": [
+        "Designing a dual aircraft UAS system capable of performing an autonomous in-flight battery transfer.",
+        "The design is utilizing custom motors, off-the-self sensors, 3D printed components, electropermanent magnets, a carbon-fibre chassis, and an onboard computer running a ML algorithm to control the aircraft."
+      ]
+    },
+    {
+      "organization": "MATLAB Project",
+      "website": "https://github.com/markdmillerjr/PAC-Project",
+      "position": "Individual Project",
+      "startDate": "2017-08",
+      "endDate": "Present",
+      "summary": "",
+      "highlights": [
+        "Designing a MATLAB program to perform preliminary calculations for conceptual designs.",
+        "Utilizes a GUI to rapidly visualize changes as they happen."
+      ]
+    },
+  ],
+  "awards": [
+    {
+      "title": "Eagle Scout",
+      "date": "2013-Present",
+      "awarder": "Boy Scouts of America",
+      "summary": "Achieved highest rank in scouting after completing a community service project consisting of constructing a new sign for a community park"
+    },
+    {
+      "title": "National Honor Society",
+      "date": "2012-2014",
+      "awarder": "Guilford High School",
+      "summary": ""
+    },
+    {
+      "title": "Summa Cum Laude",
+      "date": "2014",
+      "awarder": "Guilford High School",
+      "summary":""
+    }
+  ]
+}
