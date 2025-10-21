@@ -46,16 +46,29 @@
   "work": [
     {
       "company": "Amazon.com, Inc. (Amazon Air)",
+      "position": "Data Analyst L3",
+      "startDate": "2025-06-01",
+      "endDate": "Present",
+      "summary": "Data Analyst bridging site defects and deep diving problems",
+      "highlights": [
+        "Perform root cause analysis on package defects",
+        "Wrote a macro to determine highest performing lane",
+        "Wrote a macro to easily identify changes made to warehouse setup",
+        "Developed improvements to warehouse setup to improve employee operation"
+      ]
+    },
+    {
+      "company": "Amazon.com, Inc. (Amazon Air)",
       "position": "Process Assistant L3",
       "startDate": "2021-03-12",
-      "endDate": "Present",
+      "endDate": "2025-06-01",
       "summary": "Supervisor overseeing flow of freight at site",
       "highlights": [
         "Identify and train strong candidates for team lead positions, two promoted to L3 positions",
         "Supervised 20+ associates on 3 sort lanes simultaneously",
         "Lead the small-sort department and oversaw improvements in morale and efficiency",
         "Currently supervising the flow across each sort lane ensuring the freight is processed efficiently",
-        "Identify areas of improvements and make recommendations to management and engineers",
+        "Identify areas of improvements and make recommendations to management and engineers"
       ]
     },
     {
