@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content=" | Mark Miller Jr. | Professional Portfolio">
+    <meta name="description" content="">
+    <meta name="image" content="https://github.com/markdmillerjr.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Mark Miller Jr. | Professional Portfolio">
+    <meta property="og:url" content="https://markdmillerjr.github.io/projects/pac_code_wing.html">
+    <meta property="og:title" content=" | Mark Miller Jr. | Professional Portfolio">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://github.com/markdmillerjr.png">
+    <link rel="shortcut icon" href="/shockwave.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/techfolio-theme/rubik.css">
+    <link rel="stylesheet" type="text/css" href="/css/rouge/github.css">
+    <!-- Load MathJax if 'mathjax: true' is found in your _config.yml. -->
+    
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+
+    <title> | Mark Miller Jr. | Professional Portfolio</title>
+  </head>
+  <body>
+  <header class="navbar navbar-expand navbar-light bg-light bg-gradient border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Mark Miller</a>
+    <div class="ms-auto">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <a class="nav-link" href="/#projects">Projects</a>
+        <a class="nav-link" href="/resume.html">Resume</a>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="container py-4">
+  <h1 class="display-4"></h1>
+ <h3>Wing Planform Modification Code</h3>
+
+<p>The second, the ability to create a multi segment wing was also fairly complex. The biggest problem I faced with writing the wing segment code was in reordering the points of each segment. The problem essentially revolves around matrix manipulation. Everytime a point is laid down for a new segment, it’s position along the wingspan needs to be stored so that the wing is remodeled with the correct number of segments.</p>
+
+<p>Similar to how MATLAB plotted the wing with a FOR loop from the <b>Airfoil</b> code, four points are needed to complete a wing segment. Therefore, if a single point is placed along the leading edge of the wing, a similar point needs to be placed at the same location along the span on the trailing edge. This ensures MATLAB can build the wing with two complete segments.</p>
+
+<p>Below is an example of an unmodified wing planform. At the end of this code, the wing will be separated into ten segments, five for each half wing span.</p>
+<h4>Unmodified Wing Planform</h4>
+<p><img class="img-fluid" src="../img/pac_project/wing_planform_mod/wing_section_0.png" /></p>
+
+<p>The sketches below are the basic theories behind the process described above. Each point that is placed along the wing is stored into an array to determine the order that the wing should be modeled.
+<img class="img-fluid" src="../img/pac_project/wing_planform_mod/SCAN0035.png" />
+<img class="img-fluid" src="../img/pac_project/wing_planform_mod/SCAN0037.png" />
+<img class="img-fluid" src="../img/pac_project/wing_planform_mod/SCAN0036.png" /></p>
+
+<p>Below is the code that follows the idea laid out from the sketches above. It reorders the points for each segment and determines the slope of each segment to determine the modeling of a complex multi-segment wing.</p>
+
+<h4>Wing Planform Code</h4>
+<p>Following code snippet assumes that points have been placed on both the leading and trailing edges, that way it won’t encounter problems with empty arrays. If points are only placed along the leading or trailing edge, not both, a code snippet below this is run.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% Wing Preview</span>
+<span class="c1">%--------------------------------------------------------------------------</span>
+<span class="c1">% The following code is quite involved, but it solves a fairly complex</span>
+<span class="c1">% problem. Adding points to only the leading edge or the trailing edge is</span>
+<span class="c1">% quite easy, all you need to do is ensure that they are in the correct</span>
+<span class="c1">% order to build the final wing. Unfortunately, when you add points to both</span>
+<span class="c1">% the leading and trailing edge it becomes much more complex. </span>
+
+<span class="c1">% For example say you add two points to the leading edge, so now the wing</span>
+<span class="c1">% is broken up into three sections. Then you add a point to the trailing</span>
+<span class="c1">% edge that is in between those two leading edge points. Now to construct</span>
+<span class="c1">% the wing correctly you need to calculate the slope created by those two</span>
+<span class="c1">% leading edge points and then, the difficult part, essentially mirror the</span>
+<span class="c1">% trailing edge point to the leading edge to create another wing segment</span>
+<span class="c1">% between the current three segments.</span>
+
+<span class="c1">% The problem only becomes more complex when you want to modify those</span>
+<span class="c1">% points by moving them along the span. Then you have to reorder every</span>
+<span class="c1">% point correctly, and create the wing segments in the correct order.</span>
+<span class="c1">%--------------------------------------------------------------------------</span>
+
+<span class="c1">% To begin we need to determine if we need to create an extra wing segment</span>
+<span class="c1">% or not based on whether we have a point placed on either the root chord</span>
+<span class="c1">% or tip chord </span>
+
+<span class="c1">% If a point is placed on either the root or tip chord set addOn to 0</span>
+<span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">yLocationInc</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">yLocationInc</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">yLocationInc</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">yLocationInc</span> <span class="o">==</span> <span class="p">(</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">addOn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">else</span>
+    <span class="n">addOn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="c1">% If one of the points on the leading edge is on the tip chord set addOn to</span>
+<span class="c1">% 0</span>
+<span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP1</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="nb">max</span><span class="p">(</span><span class="n">tempStorageArrayY1</span><span class="p">)</span> <span class="o">==</span> <span class="n">b</span><span class="p">/</span><span class="mi">2</span>
+    <span class="n">addOn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">else</span>
+    <span class="n">addOn</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">end</span>
+
+<span class="c1">% Initialize subarrays of XWRTMainC and YWRTMainC which is the completed</span>
+<span class="c1">% arrays for housing all of the leading and trailing edge points</span>
+
+    <span class="c1">% Find where the maximum and min points are along the leading edge and</span>
+    <span class="c1">% store them in XWRTMainC and YWRTMainC and set them to a Find.</span>
+    <span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">findMaxLEPoints</span><span class="p">]</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">YWRTMainC</span> <span class="o">==</span> <span class="nb">max</span><span class="p">(</span><span class="n">YWRTMainC</span><span class="p">));</span>
+    <span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">findMinLEPoints</span><span class="p">]</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">YWRTMainC</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">YWRTMainC</span><span class="p">));</span>
+    <span class="n">findMaxLEPoints</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">findMaxLEPoints</span><span class="p">);</span>
+    <span class="n">findMinLEPoints</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">findMinLEPoints</span><span class="p">);</span>
+
+    <span class="c1">% Find where the maximum and min points are along the trailing edge and</span>
+    <span class="c1">% store them in XWRTMainC and YWRTMainC and set them to a Find.</span>
+    <span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">findMaxTEPoints</span><span class="p">]</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">YWRTMainC</span> <span class="o">==</span> <span class="nb">max</span><span class="p">(</span><span class="n">YWRTMainC</span><span class="p">));</span>
+    <span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">findMinTEPoints</span><span class="p">]</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">YWRTMainC</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">YWRTMainC</span><span class="p">));</span>
+    <span class="n">findMaxTEPoints</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">findMaxTEPoints</span><span class="p">);</span>
+    <span class="n">findMinTEPoints</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">findMinTEPoints</span><span class="p">);</span>
+
+    <span class="c1">% Create subarrays for the X-Axis and Y-Axis along the leading edge of the</span>
+    <span class="c1">% main arrays</span>
+    <span class="n">XWRTMainLE</span> <span class="o">=</span> <span class="n">XWRTMainC</span><span class="p">(</span><span class="n">findMinLEPoints</span><span class="p">:</span><span class="n">findMaxLEPoints</span><span class="p">);</span>
+    <span class="n">YWRTMainLE</span> <span class="o">=</span> <span class="n">YWRTMainC</span><span class="p">(</span><span class="n">findMinLEPoints</span><span class="p">:</span><span class="n">findMaxLEPoints</span><span class="p">);</span>
+
+    <span class="c1">% Create subarrays for the X-Axis and Y-Axis along the trailing edge of the</span>
+    <span class="c1">% main arrays</span>
+    <span class="n">XWRTMainTE</span> <span class="o">=</span> <span class="n">XWRTMainC</span><span class="p">(</span><span class="n">findMaxTEPoints</span><span class="p">:</span><span class="n">findMinTEPoints</span><span class="p">);</span>
+    <span class="n">YWRTMainTE</span> <span class="o">=</span> <span class="n">YWRTMainC</span><span class="p">(</span><span class="n">findMaxTEPoints</span><span class="p">:</span><span class="n">findMinTEPoints</span><span class="p">);</span>
+
+    <span class="c1">% Leading Edge</span>
+    <span class="c1">% Determine the slope of each wing segment created by adding a point</span>
+    <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP1</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">addOn</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">slopeLEArray</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span><span class="p">);</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span>
+            <span class="n">slopeLEArray</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">XWRTMainLE</span><span class="p">(</span><span class="n">num</span><span class="o">+</span><span class="n">addOn</span><span class="p">)</span> <span class="o">-</span> <span class="n">XWRTMainLE</span><span class="p">(</span><span class="n">num</span><span class="p">))/(</span><span class="n">YWRTMainLE</span><span class="p">(</span><span class="n">num</span><span class="o">+</span><span class="n">addOn</span><span class="p">)</span> <span class="o">-</span> <span class="n">YWRTMainLE</span><span class="p">(</span><span class="n">num</span><span class="p">));</span>
+        <span class="k">end</span>
+        <span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">findBehindPointLE</span><span class="p">]</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">tempStorageArrayYSort1</span> <span class="o">&lt;=</span> <span class="n">yLocationInc</span><span class="p">);</span>
+        <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">findBehindPointLE</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">findBehindPointLE</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">else</span>
+        <span class="n">slopeLEArray</span> <span class="o">=</span> <span class="p">(</span><span class="n">XWRTMainLE</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">XWRTMainLE</span><span class="p">(</span><span class="mi">1</span><span class="p">))/(</span><span class="n">YWRTMainLE</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">YWRTMainLE</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+        <span class="n">findBehindPointLE</span>       <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">end</span>
+
+    <span class="c1">% Trailing Edge</span>
+    <span class="c1">% Determine the slope of each wing segment created by adding a point</span>
+    <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP2</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">addOn</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">slopeTEArray</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span><span class="p">);</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span>
+            <span class="n">slopeTEArray</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">XWRTMainTE</span><span class="p">(</span><span class="n">num</span><span class="o">+</span><span class="n">addOn</span><span class="p">)</span> <span class="o">-</span> <span class="n">XWRTMainTE</span><span class="p">(</span><span class="n">num</span><span class="p">))/(</span><span class="n">YWRTMainTE</span><span class="p">(</span><span class="n">num</span><span class="o">+</span><span class="n">addOn</span><span class="p">)</span> <span class="o">-</span> <span class="n">YWRTMainTE</span><span class="p">(</span><span class="n">num</span><span class="p">));</span>
+        <span class="k">end</span>
+        <span class="p">[</span><span class="o">~</span><span class="p">,</span><span class="n">findBehindPointTE</span><span class="p">]</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">tempStorageArrayYSort2</span> <span class="o">&lt;=</span> <span class="n">yLocationInc</span><span class="p">);</span>
+        <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">findBehindPointTE</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">findBehindPointTE</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">end</span>
+    <span class="k">else</span>
+        <span class="n">slopeTEArray</span> <span class="o">=</span> <span class="p">(</span><span class="n">XWRTMainTE</span><span class="p">(</span><span class="k">end</span><span class="p">)</span> <span class="o">-</span> <span class="n">XWRTMainTE</span><span class="p">(</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">))/(</span><span class="n">YWRTMainTE</span><span class="p">(</span><span class="k">end</span><span class="p">)</span> <span class="o">-</span> <span class="n">YWRTMainTE</span><span class="p">(</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+        <span class="n">findBehindPointTE</span>     <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">end</span>
+
+        <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">storageArrayP1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">elseif</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">storageArrayP2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">end</span>
+        
+        <span class="n">numWingSegments</span> <span class="o">=</span> <span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span> <span class="o">+</span> <span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">)</span> <span class="o">+</span> <span class="n">addOn</span><span class="p">;</span>
+        
+        <span class="n">tpArray</span>               <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">numWingSegments</span><span class="p">);</span>
+        
+        <span class="c1">% Now create a loop to gradually build up the wing for each wing</span>
+        <span class="c1">% segment. This is where it gets fun.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">:</span><span class="n">numWingSegments</span> <span class="o">+</span> <span class="n">addOn</span>
+            
+            <span class="k">if</span> <span class="n">tempStorageArrayXSort1</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="n">tempStorageArrayXSort1</span> <span class="o">=</span> <span class="p">[];</span>
+            <span class="k">end</span>
+            
+            <span class="k">if</span> <span class="n">tempStorageArrayYSort1</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="n">tempStorageArrayYSort1</span> <span class="o">=</span> <span class="p">[];</span>
+            <span class="k">end</span>
+            
+            <span class="k">if</span> <span class="n">tempStorageArrayXSort2</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="n">tempStorageArrayXSort2</span> <span class="o">=</span> <span class="p">[];</span>
+            <span class="k">end</span>
+            
+            <span class="k">if</span> <span class="n">tempStorageArrayYSort2</span> <span class="o">==</span> <span class="mi">0</span>
+                <span class="n">tempStorageArrayYSort2</span> <span class="o">=</span> <span class="p">[];</span>
+            <span class="k">end</span>
+            
+            <span class="c1">% We need an array to partition all of the leading edge points</span>
+            <span class="c1">% as well as the ones created by the trailing edge modification</span>
+            <span class="n">combinedLEArrayPointsX</span> <span class="o">=</span> <span class="p">[</span><span class="n">XWRTMainLE</span> <span class="n">tempStorageArrayXSort2</span><span class="p">];</span>
+            <span class="n">combinedLEArrayPointsY</span> <span class="o">=</span> <span class="p">[</span><span class="n">YWRTMainLE</span> <span class="n">tempStorageArrayYSort2</span><span class="p">];</span>
+            <span class="n">combinedTEArrayPointsX</span> <span class="o">=</span> <span class="p">[</span><span class="n">XWRTMainTE</span> <span class="n">tempStorageArrayXSort1</span><span class="p">];</span>
+            <span class="n">combinedTEArrayPointsY</span> <span class="o">=</span> <span class="p">[</span><span class="n">YWRTMainTE</span> <span class="n">tempStorageArrayYSort1</span><span class="p">];</span>
+            
+            <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">tempStorageArrayXSort1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="n">tempStorageArrayXSort1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+            
+            <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">tempStorageArrayYSort1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="n">tempStorageArrayYSort1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+            
+            <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">tempStorageArrayXSort2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="n">tempStorageArrayXSort2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+            
+            <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">tempStorageArrayYSort2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="n">tempStorageArrayYSort2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="k">end</span>
+
+            <span class="c1">% Begin looping across all of the inputted trailing edge points</span>
+            <span class="k">for</span> <span class="n">jj</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">tempStorageArrayXSort2</span><span class="p">)</span>
+
+               <span class="c1">% Find where the trailing edge points are stored in the</span>
+               <span class="c1">% combined array housing all of the leading and trailing</span>
+               <span class="c1">% edge points</span>
+               <span class="k">if</span> <span class="n">tempStorageArrayXSort1</span> <span class="o">~=</span> <span class="mi">0</span>
+                   <span class="n">findLEXPoints</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">combinedLEArrayPointsX</span> <span class="o">==</span> <span class="n">tempStorageArrayXSort2</span><span class="p">(</span><span class="n">jj</span><span class="p">));</span>
+               <span class="k">else</span>
+                   <span class="n">findLEXPoints</span> <span class="o">=</span> <span class="p">[];</span>
+               <span class="k">end</span>
+               
+               <span class="n">findLEXPoints</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">combinedLEArrayPointsX</span> <span class="o">==</span> <span class="n">tempStorageArrayXSort2</span><span class="p">(</span><span class="n">jj</span><span class="p">));</span>
+               
+               <span class="c1">% Rearrange the Y Sort array in descending order</span>
+               <span class="n">rearrangedYSort1</span> <span class="o">=</span> <span class="nb">sort</span><span class="p">(</span><span class="n">tempStorageArrayYSort1</span><span class="p">,</span><span class="s1">'descend'</span><span class="p">);</span>
+
+               <span class="c1">% Initialize two arrays for rearranging the X-coordinate points in</span>
+               <span class="c1">% the correct order</span>
+               <span class="n">findYLocationArray</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">tempStorageArrayXSort1</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+               <span class="n">rearrangedXArray</span>   <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">tempStorageArrayXSort1</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+
+               <span class="c1">% Arrange the X-coordinate points according to the order that they</span>
+               <span class="c1">% were inputted along with the rearranged Y-coordinate</span>
+               <span class="c1">% points</span>
+               <span class="k">for</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">tempStorageArrayXSort1</span><span class="p">)</span>
+                   <span class="n">intermediateArray</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">tempStorageArrayYSort1</span> <span class="o">==</span> <span class="n">tempStorageArrayYSort1</span><span class="p">(</span><span class="n">n</span><span class="p">));</span>
+                    <span class="k">if</span> <span class="nb">length</span><span class="p">(</span><span class="n">intermediateArray</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+                        <span class="n">findFirstValue</span> <span class="o">=</span> <span class="n">intermediateArray</span> <span class="o">==</span> <span class="n">n</span><span class="p">;</span>
+                        <span class="n">findSecondValue</span> <span class="o">=</span> <span class="n">findFirstValue</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+                        <span class="n">intermediateArray</span><span class="p">(</span><span class="n">findSecondValue</span><span class="p">)</span> <span class="o">=</span> <span class="p">[];</span>
+                        <span class="n">findYLocationArray</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">intermediateArray</span><span class="p">;</span>
+                    <span class="k">else</span>
+                        <span class="n">findYLocationArray</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="n">intermediateArray</span><span class="p">;</span>
+                    <span class="k">end</span>
+                   <span class="n">findYLocationArray</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">findYLocationArray</span> <span class="o">==</span> <span class="n">n</span><span class="p">);</span>
+                   <span class="n">findYSorted</span> <span class="o">=</span> <span class="n">rearrangedYSort1</span> <span class="o">==</span> <span class="n">tempStorageArrayYSort1</span><span class="p">(</span><span class="n">findYLocationArray</span><span class="p">(</span><span class="n">n</span><span class="p">));</span>
+                   <span class="n">rearrangedXArray</span><span class="p">(</span><span class="n">findYSorted</span><span class="p">)</span> <span class="o">=</span> <span class="n">tempStorageArrayXSort1</span><span class="p">(</span><span class="n">findYLocationArray</span><span class="p">(</span><span class="n">n</span><span class="p">));</span>
+                <span class="k">end</span>
+                <span class="n">rearrangedXSort1</span> <span class="o">=</span> <span class="n">rearrangedXArray</span><span class="o">'</span><span class="p">;</span>
+
+                <span class="c1">% Find where the trailing edge point is greater than the</span>
+                <span class="c1">% leading edge points. If it isn't then set the Find to 0</span>
+                <span class="k">for</span> <span class="n">inc1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">tempStorageArrayYSort1</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">tempStorageArrayYSort2</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">rearrangedYSort1</span><span class="p">(</span><span class="n">inc1</span><span class="p">)</span>
+                        <span class="n">findSlopeLEPoint1</span> <span class="o">=</span> <span class="n">inc1</span><span class="p">;</span>
+                        <span class="k">break</span>
+                    <span class="k">else</span>
+                        <span class="n">findSlopeLEPoint1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="k">end</span>
+                <span class="k">end</span>
+
+                <span class="c1">% Find where the trailing edge point is less than the</span>
+                <span class="c1">% leading edge points. If it isn't then set the Find to 0</span>
+                <span class="k">for</span> <span class="n">inc2</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">tempStorageArrayYSort1</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">tempStorageArrayYSort2</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tempStorageArrayYSort1</span><span class="p">(</span><span class="n">inc2</span><span class="p">)</span>
+                        <span class="n">findSlopeLEPoint2</span> <span class="o">=</span> <span class="n">inc2</span><span class="p">;</span>
+                        <span class="k">break</span>
+                    <span class="k">else</span>
+                        <span class="n">findSlopeLEPoint2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="k">end</span>
+                <span class="k">end</span>
+
+                <span class="c1">% If the first Find is greater than the second Find, set</span>
+                <span class="c1">% the maxPoint to the first Find and set the substitute</span>
+                <span class="c1">% arrays to the rearranged arrays. If it isn't then do the</span>
+                <span class="c1">% opposite and set the substitute arrays to the regular Sort</span>
+                <span class="c1">% arrays</span>
+                <span class="k">if</span> <span class="n">findSlopeLEPoint1</span> <span class="o">&gt;</span> <span class="n">findSlopeLEPoint2</span>
+                    <span class="n">maxPointLE</span> <span class="o">=</span> <span class="n">findSlopeLEPoint1</span><span class="p">;</span>
+                    <span class="n">substituteXArray</span> <span class="o">=</span> <span class="n">rearrangedXSort1</span><span class="p">;</span>
+                    <span class="n">substituteYArray</span> <span class="o">=</span> <span class="n">rearrangedYSort1</span><span class="p">;</span>
+                <span class="k">elseif</span> <span class="n">findSlopeLEPoint2</span> <span class="o">&gt;</span> <span class="n">findSlopeLEPoint1</span>
+                    <span class="n">maxPointLE</span> <span class="o">=</span> <span class="n">findSlopeLEPoint2</span><span class="p">;</span>
+                    <span class="n">substituteXArray</span>  <span class="o">=</span> <span class="n">tempStorageArrayXSort1</span><span class="p">;</span>
+                    <span class="n">substituteYArray</span>  <span class="o">=</span> <span class="n">tempStorageArrayYSort1</span><span class="p">;</span>
+                <span class="k">else</span>
+                    <span class="n">maxPointLE</span> <span class="o">=</span> <span class="n">findSlopeLEPoint1</span><span class="p">;</span>
+                    <span class="n">substituteXArray</span> <span class="o">=</span> <span class="n">rearrangedXSort1</span><span class="p">;</span>
+                    <span class="n">substituteYArray</span> <span class="o">=</span> <span class="n">rearrangedYSort1</span><span class="p">;</span>
+                <span class="k">end</span>
+
+                <span class="k">if</span> <span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                    <span class="n">maxPointLE</span> <span class="o">=</span> <span class="n">findSlopeLEPoint1</span><span class="p">;</span>
+                    <span class="n">substituteXArray</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">XWRTMainLE</span><span class="p">);</span>
+                    <span class="n">substituteYArray</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">YWRTMainLE</span><span class="p">);</span>
+                <span class="k">end</span>
+                
+               <span class="c1">% Determine what wing segments and subsequent slopes the</span>
+               <span class="c1">% trailing edge points are under</span>
+               <span class="k">for</span> <span class="nb">count</span> <span class="o">=</span> <span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span>
+                   <span class="k">if</span> <span class="nb">count</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">tempStorageArrayYSort2</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">tempStorageArrayYSort1</span><span class="p">(</span><span class="nb">count</span><span class="o">-</span><span class="n">addOn</span><span class="p">)</span>
+                       <span class="n">slopeLEPoint</span> <span class="o">=</span> <span class="n">slopeLEArray</span><span class="p">(</span><span class="nb">count</span><span class="p">);</span>
+                       <span class="k">break</span>
+                   <span class="k">elseif</span> <span class="n">tempStorageArrayYSort2</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tempStorageArrayYSort1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                       <span class="n">slopeLEPoint</span> <span class="o">=</span> <span class="n">slopeLEArray</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+                       <span class="k">break</span>
+                   <span class="k">else</span>
+                       <span class="n">slopeLEPoint</span> <span class="o">=</span> <span class="n">slopeLEArray</span><span class="p">;</span>
+                   <span class="k">end</span>
+               <span class="k">end</span>
+
+               <span class="c1">% Here's the important part, for the trailing edge point found </span>
+               <span class="c1">% in the combined array determine its new X-Coordinate due to being</span>
+               <span class="c1">% translated(mirrored) to the leading edge</span>
+                <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">findLEXPoints</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">1</span>
+                    <span class="n">combinedLEArrayPointsX</span><span class="p">(</span><span class="n">findLEXPoints</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">tempStorageArrayYSort2</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span><span class="k">...</span>
+                        <span class="o">-</span> <span class="n">substituteYArray</span><span class="p">(</span><span class="n">maxPointLE</span><span class="p">))</span> <span class="o">*</span> <span class="n">slopeLEPoint</span> <span class="o">+</span> <span class="n">substituteXArray</span><span class="p">(</span><span class="n">maxPointLE</span><span class="p">);</span>
+                <span class="k">end</span>
+            <span class="k">end</span>
+
+            <span class="c1">% Set the combined array to a new sorter array name</span>
+            <span class="n">pointLE</span> <span class="o">=</span> <span class="n">combinedLEArrayPointsX</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>For brevity, I removed the trailing edge code as it is identical to the leading edge code.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="o">.</span>
+            <span class="o">.</span>
+            <span class="o">.</span>
+            <span class="c1">% Arrange the Y-coordinate points in decreasing order</span>
+            <span class="n">sortedLEPointsY</span> <span class="o">=</span> <span class="nb">sort</span><span class="p">(</span><span class="n">combinedLEArrayPointsY</span><span class="p">);</span>
+
+            <span class="c1">% Initialize two arrays for rearranging the X-coordinate points in</span>
+            <span class="c1">% the correct order</span>
+            <span class="n">findYLocationArray</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">pointLE</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+            <span class="n">rearrangedXArray</span>   <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">pointLE</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+
+            <span class="c1">% Arrange the X-coordinate points according to the order that they</span>
+            <span class="c1">% were inputted</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">combinedLEArrayPointsX</span><span class="p">)</span>
+                <span class="n">intermediateArray</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">combinedLEArrayPointsY</span> <span class="o">==</span> <span class="n">combinedLEArrayPointsY</span><span class="p">(</span><span class="n">m</span><span class="p">));</span>
+                <span class="k">if</span> <span class="nb">length</span><span class="p">(</span><span class="n">intermediateArray</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+                    <span class="n">findFirstValue</span> <span class="o">=</span> <span class="n">intermediateArray</span> <span class="o">==</span> <span class="n">m</span><span class="p">;</span>
+                    <span class="n">findSecondValue</span> <span class="o">=</span> <span class="n">findFirstValue</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="n">intermediateArray</span><span class="p">(</span><span class="n">findSecondValue</span><span class="p">)</span> <span class="o">=</span> <span class="p">[];</span>
+                    <span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">=</span> <span class="n">intermediateArray</span><span class="p">;</span>
+                <span class="k">else</span>
+                    <span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">=</span> <span class="n">intermediateArray</span><span class="p">;</span>
+                <span class="k">end</span>
+                <span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">findYLocationArray</span> <span class="o">==</span> <span class="n">m</span><span class="p">);</span>
+                <span class="n">findYSorted</span> <span class="o">=</span> <span class="n">sortedLEPointsY</span> <span class="o">==</span> <span class="n">combinedLEArrayPointsY</span><span class="p">(</span><span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">));</span>
+                <span class="n">rearrangedXArray</span><span class="p">(</span><span class="n">findYSorted</span><span class="p">)</span> <span class="o">=</span> <span class="n">combinedLEArrayPointsX</span><span class="p">(</span><span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">));</span>
+            <span class="k">end</span>
+            <span class="n">sortedLEPointsX</span> <span class="o">=</span> <span class="n">rearrangedXArray</span><span class="p">;</span>
+
+            <span class="c1">% Initialize two arrays for rearranging the X-coordinate points in</span>
+            <span class="c1">% the correct order</span>
+            <span class="n">findYLocationArray</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">pointTE</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+            <span class="n">rearrangedXArray</span>   <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">pointTE</span><span class="p">),</span><span class="mi">1</span><span class="p">);</span>
+
+            <span class="c1">% Arrange the X-coordinate points according to the order that they</span>
+            <span class="c1">% were inputted</span>
+            <span class="k">for</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">combinedTEArrayPointsX</span><span class="p">)</span>
+                <span class="n">intermediateArray</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">combinedTEArrayPointsY</span> <span class="o">==</span> <span class="n">combinedTEArrayPointsY</span><span class="p">(</span><span class="n">m</span><span class="p">));</span>
+                <span class="k">if</span> <span class="nb">length</span><span class="p">(</span><span class="n">intermediateArray</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+                    <span class="n">findFirstValue</span> <span class="o">=</span> <span class="n">intermediateArray</span> <span class="o">==</span> <span class="n">m</span><span class="p">;</span>
+                    <span class="n">findSecondValue</span> <span class="o">=</span> <span class="n">findFirstValue</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="n">intermediateArray</span><span class="p">(</span><span class="n">findSecondValue</span><span class="p">)</span> <span class="o">=</span> <span class="p">[];</span>
+                    <span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">=</span> <span class="n">intermediateArray</span><span class="p">;</span>
+                <span class="k">else</span>
+                    <span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">=</span> <span class="n">intermediateArray</span><span class="p">;</span>
+                <span class="k">end</span>
+                <span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">findYLocationArray</span> <span class="o">==</span> <span class="n">m</span><span class="p">);</span>
+                <span class="n">findYSorted</span> <span class="o">=</span> <span class="n">sortedLEPointsY</span> <span class="o">==</span> <span class="n">combinedTEArrayPointsY</span><span class="p">(</span><span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">));</span>
+                <span class="n">rearrangedXArray</span><span class="p">(</span><span class="n">findYSorted</span><span class="p">)</span> <span class="o">=</span> <span class="n">combinedTEArrayPointsX</span><span class="p">(</span><span class="n">findYLocationArray</span><span class="p">(</span><span class="n">m</span><span class="p">));</span>
+            <span class="k">end</span>
+            <span class="n">sortedTEPointsX</span> <span class="o">=</span> <span class="n">rearrangedXArray</span><span class="p">;</span>
+            
+            <span class="n">tpArray</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">pointTE</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">pointLE</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="p">/</span> <span class="n">rootChord</span><span class="p">;</span>
+            <span class="n">tpSub</span> <span class="o">=</span> <span class="nb">sort</span><span class="p">(</span><span class="n">tpArray</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">),</span><span class="s1">'descend'</span><span class="p">);</span>
+            <span class="n">tpArray</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="n">tpSub</span><span class="p">];</span>
+        <span class="k">end</span>
+        
+        <span class="c1">% Determine taper of each segment</span>
+        <span class="n">tpArray</span> <span class="o">=</span> <span class="p">(</span><span class="n">sortedTEPointsX</span><span class="s1">' - sortedLEPointsX'</span><span class="p">)</span> <span class="p">/</span> <span class="n">rootChord</span><span class="p">;</span>
+        
+        <span class="k">if</span> <span class="n">storageArrayP1</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">storageArrayP1</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">elseif</span> <span class="n">storageArrayP2</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">storageArrayP2</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">end</span>
+        
+        <span class="c1">% Initialize array for final storage of leading edge points</span>
+        <span class="n">sorted_airfoil_coords_xLE</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="nb">length</span><span class="p">(</span><span class="n">pointLE</span><span class="p">));</span>
+        
+        <span class="c1">% Create array of final leading edge points </span>
+        <span class="n">airfoil_coords_xLE</span> <span class="o">=</span> <span class="n">comboAirfoil_coords_xRoot</span> <span class="o">*</span> <span class="n">rootChord</span> <span class="o">*</span> <span class="n">tpArray</span> <span class="o">+</span> <span class="n">sortedLEPointsX</span><span class="o">'</span><span class="p">;</span>
+            
+        <span class="c1">% Cut the above array in half to only look at the top surface first</span>
+        <span class="n">sub_airfoil_coords_xLE</span> <span class="o">=</span> <span class="n">airfoil_coords_xLE</span><span class="p">(</span><span class="nb">ceil</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">(</span><span class="mi">1</span><span class="p">)/</span><span class="mi">2</span><span class="p">),:);</span>
+
+        <span class="n">findLEPointsX</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">length</span><span class="p">(</span><span class="n">pointLE</span><span class="p">));</span>
+        
+        <span class="c1">% Determine the final position of the leading edge points</span>
+        <span class="k">for</span> <span class="n">inc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">pointLE</span><span class="p">)</span>
+            <span class="n">findLEPointsX</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">sub_airfoil_coords_xLE</span><span class="p">(</span><span class="n">inc</span><span class="p">)</span> <span class="o">==</span> <span class="n">sortedLEPointsX</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+            <span class="n">sorted_airfoil_coords_xLE</span><span class="p">(:,</span><span class="n">inc</span><span class="p">)</span> <span class="o">=</span> <span class="n">airfoil_coords_xLE</span><span class="p">(:,</span><span class="n">findLEPointsX</span><span class="p">(</span><span class="n">inc</span><span class="p">));</span>
+        <span class="k">end</span>
+        
+        <span class="c1">% Set airfoil_coords_xLE to sorted_airfoil_coords_xLE variable</span>
+        <span class="n">airfoil_coords_xLE</span> <span class="o">=</span> <span class="n">sorted_airfoil_coords_xLE</span><span class="p">;</span>
+        
+        <span class="c1">% Wing Area</span>
+        <span class="n">wingArea</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">tp</span><span class="p">);</span>
+        
+        <span class="c1">% Wing Aspect Ratio</span>
+        <span class="n">ARWing</span> <span class="o">=</span> <span class="n">b</span><span class="o">^</span><span class="mi">2</span><span class="p">/</span><span class="n">wingArea</span><span class="p">;</span>
+
+       <span class="c1">% X-Coordinates</span>
+        <span class="n">XW1</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+        <span class="n">XW2</span><span class="o">=</span><span class="n">XW1</span><span class="o">+</span><span class="p">(</span><span class="n">b</span><span class="p">/</span><span class="n">c</span><span class="p">)</span><span class="o">*</span><span class="nb">tand</span><span class="p">(</span><span class="n">LamLE</span><span class="p">);</span>
+        <span class="n">XW4</span><span class="o">=</span><span class="n">XW1</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+
+        <span class="c1">% Z-Coordinates</span>
+        <span class="n">ZW2</span><span class="o">=</span><span class="mi">1</span><span class="p">/</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">XW4</span><span class="o">-</span><span class="n">XW2</span><span class="p">)</span><span class="o">*</span><span class="nb">sind</span><span class="p">(</span><span class="n">i_w</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">ARWing</span><span class="p">)</span><span class="o">*</span><span class="nb">tand</span><span class="p">(</span><span class="n">Gam</span><span class="p">);</span>
+        
+        <span class="n">xCoordsBoth</span> <span class="o">=</span> <span class="n">airfoil_coords_xLE</span><span class="p">;</span>
+        <span class="n">yCoordsBoth</span> <span class="o">=</span> <span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="o">.*</span><span class="n">sortedLEPointsY</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="p">));</span>
+        <span class="n">zCoordsMid</span> <span class="o">=</span> <span class="p">(</span><span class="n">comboAirfoil_coords_yRoot</span><span class="o">.*</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">numWingSegments</span><span class="o">+</span><span class="n">addOn</span><span class="p">)</span><span class="o">+</span><span class="n">ZW2</span><span class="p">)</span><span class="o">.*</span><span class="n">rootChord</span><span class="o">*</span><span class="n">tp</span><span class="p">);</span>
+        <span class="n">zCoordsEnd</span>  <span class="o">=</span> <span class="p">(</span><span class="n">comboAirfoil_coords_yTip</span><span class="o">.*</span><span class="n">rootChord</span><span class="o">*</span><span class="n">tp</span><span class="p">);</span>
+        <span class="n">zCoordsBoth</span> <span class="o">=</span> <span class="p">[</span><span class="n">zCoordsMid</span><span class="p">(:,</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">zCoordsEnd</span><span class="p">];</span>
+     
+        <span class="k">if</span> <span class="n">storageArrayP1</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">storageArrayP1</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">end</span>
+        
+        <span class="k">if</span> <span class="n">storageArrayP2</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">storageArrayP2</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">end</span>
+        
+        <span class="k">if</span> <span class="n">tempStorageArrayXSort1</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">tempStorageArrayXSort1</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">end</span>
+
+        <span class="k">if</span> <span class="n">tempStorageArrayYSort1</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">tempStorageArrayYSort1</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">end</span>
+
+        <span class="k">if</span> <span class="n">tempStorageArrayXSort2</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">tempStorageArrayXSort2</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">end</span>
+
+        <span class="k">if</span> <span class="n">tempStorageArrayYSort2</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">tempStorageArrayYSort2</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">end</span>
+</code></pre></div></div>
+<p>Following code snippet is for if a point is the first one placed on either the leading or trailing edge. The issue with the above code is that it assumes a nonempty array for both leading and trailing edge points. Therefore, only need to manipulate arrays for the leading edge points or for the trailing edge points, not both.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>    
+    <span class="k">switch</span><span class="p">(</span><span class="n">lineSelected</span><span class="p">)</span>
+        <span class="c1">%% 1 Leading Edge Modification</span>
+        <span class="k">case</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP1</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">1</span>
+        <span class="n">yLocationFirstWS</span>    <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">));</span>
+        <span class="n">xLocationFirstWSLES</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">));</span>
+        <span class="n">firstWSChord</span>        <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">));</span>
+        <span class="n">tpWS</span>                <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">));</span>
+    <span class="k">else</span>
+        <span class="n">yLocationFirstWS</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">xLocationFirstWSLES</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">firstWSChord</span>        <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">tpWS</span>                <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">storageArrayP1</span>      <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">end</span>
+        <span class="n">airfoil_coords_xLE</span>  <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">incrementSlope</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">incrementSlope</span> <span class="o">=</span> <span class="n">storageArrayP2</span><span class="p">;</span>
+        <span class="k">end</span>       
+        
+            <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">incrementSlope</span><span class="p">(</span><span class="k">end</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span>
+                    <span class="n">upperAirfoilCoordsXLE</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span><span class="p">);</span>
+                    <span class="n">lowerAirfoilCoordsXLE</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span><span class="p">);</span>
+                    
+                    <span class="c1">% Y-Location of end of first wing segment</span>
+                    <span class="n">yLocationFirstWS</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">slopeTEArray</span><span class="p">(</span><span class="n">findBehindPointTE</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="o">*</span><span class="n">YWRTMainLE</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">rootChord</span><span class="p">;</span>
+                    
+                    <span class="c1">% X-Location accounting for LE sweep</span>
+                    <span class="n">xLocationFirstWSLES</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">yLocationFirstWS</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+                    <span class="c1">% Subtract LE point </span>
+                    <span class="n">firstWSChord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">xLocationFirstWSLES</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">XWRTMainLE</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+
+                    <span class="c1">% Taper of wing segment</span>
+                    <span class="n">tpWS</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">firstWSChord</span><span class="p">(</span><span class="n">i</span><span class="p">)/</span><span class="n">rootChord</span><span class="p">;</span>
+
+                    <span class="c1">% Set up airfoil coordinates for each wing segment</span>
+                    <span class="n">airfoil_coords_xLE</span><span class="p">(:,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">yLocationFirstWS</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">comboAirfoil_coords_xRoot</span><span class="o">*</span><span class="n">rootChord</span><span class="o">*</span><span class="n">tpWS</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+                        
+                    <span class="c1">% Need to separate airfoil_coords_xLE into a upper and lower</span>
+                    <span class="c1">% section and then invert them and put the whole array back</span>
+                    <span class="c1">% together</span>
+                    <span class="p">[</span><span class="n">maxAirfoilCoordsXLE_Val</span><span class="p">,</span><span class="n">maxAirfoilCoordsXLE_Loc</span><span class="p">]</span>   <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">airfoil_coords_xLE</span><span class="p">(:,</span><span class="n">i</span><span class="p">));</span>
+                    <span class="n">upperAirfoilCoordsXLE</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">maxAirfoilCoordsXLE_Loc</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">airfoil_coords_xLE</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">maxAirfoilCoordsXLE_Loc</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+                    <span class="n">lowerAirfoilCoordsXLE</span><span class="p">(</span><span class="n">maxAirfoilCoordsXLE_Loc</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="k">end</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">airfoil_coords_xLE</span><span class="p">(</span><span class="n">maxAirfoilCoordsXLE_Loc</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="k">end</span><span class="p">,</span><span class="n">i</span><span class="p">);</span>
+                    
+                    <span class="c1">% Find zeros</span>
+                    <span class="n">findZerosUpper</span> <span class="o">=</span> <span class="n">upperAirfoilCoordsXLE</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="n">findZerosLower</span> <span class="o">=</span> <span class="n">lowerAirfoilCoordsXLE</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+                    
+                    <span class="c1">% Erase zeros</span>
+                    <span class="n">upperAirfoilCoordsXLE</span><span class="p">(</span><span class="n">findZerosUpper</span><span class="p">)</span> <span class="o">=</span> <span class="p">[];</span>
+                    <span class="n">lowerAirfoilCoordsXLE</span><span class="p">(</span><span class="n">findZerosLower</span><span class="p">)</span> <span class="o">=</span> <span class="p">[];</span>
+                    
+                    <span class="c1">% Add in max point so that the upper and lower are same</span>
+                    <span class="n">lowerAirfoilCoordsXLE</span> <span class="o">=</span> <span class="p">[</span><span class="n">maxAirfoilCoordsXLE_Val</span> <span class="n">lowerAirfoilCoordsXLE</span><span class="p">];</span>
+                    
+                    <span class="c1">% Erase last point on lowerAirfoilCoordsXLE otherwise</span>
+                    <span class="c1">% we would have two, only need one</span>
+                    <span class="n">lowerAirfoilCoordsXLE</span><span class="p">(</span><span class="k">end</span><span class="p">)</span> <span class="o">=</span> <span class="p">[];</span>
+                    
+                    <span class="n">airfoil_coords_xLE</span><span class="p">(:,</span><span class="n">i</span><span class="p">)</span>    <span class="o">=</span> <span class="p">[</span><span class="n">lowerAirfoilCoordsXLE</span> <span class="n">upperAirfoilCoordsXLE</span><span class="p">];</span>
+    
+                <span class="k">end</span>
+            <span class="k">end</span>
+
+        <span class="c1">% For tip chord need to do something a little different</span>
+        <span class="n">tipChordPointsY</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">YWRTMainC</span> <span class="o">==</span> <span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">);</span>
+        <span class="n">tipChordPointsX</span> <span class="o">=</span> <span class="n">XWRTMainC</span><span class="p">(</span><span class="n">tipChordPointsY</span><span class="p">);</span>
+        
+        <span class="c1">% Taper of tip chord</span>
+        <span class="n">tpTC</span> <span class="o">=</span> <span class="p">(</span><span class="n">tipChordPointsX</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">tipChordPointsX</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="p">/</span> <span class="n">rootChord</span><span class="p">;</span>
+        
+        <span class="c1">% Airfoil coordinates of tip chord</span>
+        <span class="n">airfoil_coords_xEnd</span> <span class="o">=</span> <span class="n">comboAirfoil_coords_xRoot</span><span class="o">*</span><span class="n">rootChord</span><span class="o">*</span><span class="n">tpTC</span><span class="o">+</span><span class="n">tipChordPointsX</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        
+        <span class="c1">% Set up airfoil coordinates for first point</span>
+        <span class="n">airfoil_coords_x1</span> <span class="o">=</span> <span class="n">comboAirfoil_coords_xRoot</span><span class="o">*</span><span class="n">rootChord</span> <span class="o">+</span> <span class="n">XWRTMainLE</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="n">addOn</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="n">xCoordsLE</span> <span class="o">=</span> <span class="p">[</span><span class="n">airfoil_coords_x1</span><span class="p">,</span> <span class="n">airfoil_coords_xEnd</span><span class="p">];</span>
+        <span class="k">else</span>
+            <span class="n">xCoordsLE</span> <span class="o">=</span> <span class="p">[</span><span class="n">airfoil_coords_x1</span><span class="p">,</span> <span class="n">airfoil_coords_xLE</span><span class="p">];</span>
+        <span class="k">end</span>
+        
+        <span class="c1">% Build final arrays along each axis to input into surface plot</span>
+        <span class="n">yCoordsLE</span> <span class="o">=</span> <span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="o">.*</span><span class="n">YWRTMainLE</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+        <span class="n">zCoordsLERoot</span> <span class="o">=</span> <span class="n">comboAirfoil_coords_yRoot</span><span class="o">.*</span><span class="n">rootChord</span><span class="p">;</span>
+        <span class="n">zCoordsLE</span>     <span class="o">=</span> <span class="n">comboAirfoil_coords_yTip</span><span class="o">.*</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP1</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.*</span><span class="n">tipChord</span><span class="p">);</span>
+        <span class="n">zCoordsLE</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span>    <span class="o">=</span> <span class="n">zCoordsLERoot</span><span class="p">;</span>
+        
+        
+        <span class="c1">%% Trailing Edge Modification</span>
+        <span class="k">case</span> <span class="mi">2</span> 
+
+        <span class="n">xLocationFirstWS</span>    <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">));</span>
+        <span class="n">xLocationFirstWSLES</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">));</span>
+        <span class="n">firstWSChord</span>        <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">));</span>
+        <span class="n">tpWS</span>                <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">));</span>
+        <span class="n">airfoil_coords_xTE</span>  <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">incrementSlope</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="n">incrementSlope</span> <span class="o">=</span> <span class="n">storageArrayP1</span><span class="p">;</span>
+        <span class="k">end</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">incrementSlope</span><span class="p">(</span><span class="k">end</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span>
+                <span class="c1">% X-Location of LE of wing segment</span>
+                <span class="n">xLocationFirstWS</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">slopeLEArray</span><span class="p">(</span><span class="n">findBehindPointLE</span><span class="p">(</span><span class="n">j</span><span class="p">))</span><span class="o">*</span><span class="n">YWRTMainTE</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+
+                <span class="c1">% X-Location accounting for TE sweep</span>
+                <span class="n">xLocationFirstWSLES</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">xLocationFirstWS</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+                <span class="c1">% Subtract LE point </span>
+                <span class="n">firstWSChord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">xLocationFirstWSLES</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+                <span class="n">firstWSChord</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">XWRTMainTE</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">xLocationFirstWSLES</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+                <span class="c1">% Taper of wing segment</span>
+                <span class="n">tpWS</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">firstWSChord</span><span class="p">(</span><span class="n">i</span><span class="p">)/</span><span class="n">rootChord</span><span class="p">;</span>
+
+                <span class="k">if</span> <span class="n">tpWS</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+                    <span class="n">tpWS</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="k">end</span>
+
+                <span class="c1">% Set up airfoil coordinates for each wing segment</span>
+                <span class="n">airfoil_coords_xTE</span><span class="p">(:,</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="n">xLocationFirstWS</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">comboAirfoil_coords_xRoot</span><span class="o">*</span><span class="n">rootChord</span><span class="o">*</span><span class="n">tpWS</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+        
+        <span class="c1">% For tip chord need to do something a little different</span>
+        <span class="n">tipChordPointsY</span> <span class="o">=</span> <span class="nb">find</span><span class="p">(</span><span class="n">YWRTMainC</span> <span class="o">==</span> <span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">);</span>
+        <span class="n">tipChordPointsX</span> <span class="o">=</span> <span class="n">XWRTMainC</span><span class="p">(</span><span class="n">tipChordPointsY</span><span class="p">);</span>
+        
+        <span class="c1">% Taper of tip chord</span>
+        <span class="n">tpTC</span> <span class="o">=</span> <span class="p">(</span><span class="n">tipChordPointsX</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">tipChordPointsX</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="p">/</span> <span class="n">rootChord</span><span class="p">;</span>
+        
+        <span class="c1">% Airfoil coordinates of tip chord</span>
+        <span class="n">airfoil_coords_x1</span> <span class="o">=</span> <span class="n">comboAirfoil_coords_xRoot</span><span class="o">*</span><span class="n">rootChord</span><span class="o">*</span><span class="n">tpTC</span><span class="o">+</span><span class="n">tipChordPointsX</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+        <span class="c1">% Set up airfoil coordinates for first point</span>
+        <span class="n">xLocationFirstWS</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="n">slopeLEArray</span><span class="p">(</span><span class="n">findBehindPointLE</span><span class="p">)</span><span class="o">*</span><span class="n">YWRTMainTE</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+        <span class="c1">% Build final arrays along each axis to input into surface plot</span>
+        <span class="n">xCoordsTE</span> <span class="o">=</span> <span class="p">[</span><span class="n">airfoil_coords_x1</span><span class="p">,</span> <span class="n">airfoil_coords_xTE</span><span class="p">];</span>
+        <span class="n">yCoordsTE</span> <span class="o">=</span> <span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span><span class="o">.*</span><span class="n">YWRTMainTE</span><span class="p">);</span>
+        <span class="n">zCoordsTERoot</span> <span class="o">=</span> <span class="n">comboAirfoil_coords_yRoot</span><span class="o">.*</span><span class="n">rootChord</span><span class="o">.*</span><span class="n">tp</span><span class="p">;</span>
+        <span class="n">zCoordsTE</span> <span class="o">=</span> <span class="n">comboAirfoil_coords_yTip</span><span class="o">.*</span><span class="p">(</span><span class="nb">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">storageArrayP2</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="o">+</span><span class="n">addOn</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.*</span><span class="n">rootChord</span><span class="o">*</span><span class="n">tp</span><span class="p">);</span>
+        <span class="n">zCoordsTE</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">zCoordsTERoot</span><span class="p">;</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+    
+<span class="n">xCoords</span> <span class="o">=</span> <span class="n">xCoordsBoth</span><span class="p">;</span>
+<span class="n">yCoords</span> <span class="o">=</span> <span class="n">yCoordsBoth</span><span class="p">;</span>
+<span class="n">zCoords</span> <span class="o">=</span> <span class="n">zCoordsBoth</span><span class="p">;</span>
+
+<span class="c1">%% ------------------------------------------------------------------------</span>
+</code></pre></div></div>
+<p>Plot the final multi segment wing. If it’s the first time creating the wing, no points are stored, so only need to create the wing with a single segment.</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP1</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">1</span> <span class="o">||</span> <span class="nb">isempty</span><span class="p">(</span><span class="n">storageArrayP2</span><span class="p">)</span> <span class="o">~=</span> <span class="mi">1</span>
+
+    <span class="nb">delete</span><span class="p">(</span><span class="n">wingPreviewLeft</span><span class="p">);</span>
+    <span class="nb">delete</span><span class="p">(</span><span class="n">wingPreviewRight</span><span class="p">);</span>
+    <span class="nb">delete</span><span class="p">(</span><span class="n">wingPreviewLeftInitial</span><span class="p">);</span>
+    <span class="nb">delete</span><span class="p">(</span><span class="n">wingPreviewRightInitial</span><span class="p">);</span>
+    <span class="nb">delete</span><span class="p">(</span><span class="n">rightAirfoil</span><span class="p">);</span>
+    <span class="nb">delete</span><span class="p">(</span><span class="n">leftAirfoil</span><span class="p">);</span>
+
+    <span class="c1">% Plot left wing</span>
+    <span class="n">wingPreviewLeft</span> <span class="o">=</span> <span class="nb">surface</span><span class="p">(</span><span class="n">previewAxes</span><span class="p">,</span><span class="n">xCoords</span><span class="p">,</span><span class="n">yCoords</span><span class="p">,</span><span class="n">zCoords</span><span class="p">);</span>
+    <span class="n">wingPreviewLeft</span><span class="o">.</span><span class="n">EdgeColor</span> <span class="o">=</span> <span class="s1">'none'</span><span class="p">;</span>
+
+    <span class="c1">% Plot right wing</span>
+    <span class="n">wingPreviewRight</span> <span class="o">=</span> <span class="nb">surface</span><span class="p">(</span><span class="n">previewAxes</span><span class="p">,</span><span class="n">xCoords</span><span class="p">,</span><span class="o">-</span><span class="n">yCoords</span><span class="p">,</span><span class="n">zCoords</span><span class="p">);</span>
+    <span class="n">wingPreviewRight</span><span class="o">.</span><span class="n">EdgeColor</span> <span class="o">=</span> <span class="s1">'none'</span><span class="p">;</span>
+<span class="k">else</span>
+
+    <span class="c1">% X-Coordinates</span>
+    <span class="n">XW1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">XW2</span><span class="o">=</span><span class="n">XW1</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">tand</span><span class="p">(</span><span class="n">LamLE</span><span class="p">);</span>
+    <span class="n">XW4</span><span class="o">=</span><span class="n">XW1</span><span class="o">+</span><span class="n">rootChord</span><span class="p">;</span>
+
+    <span class="c1">% Z-Coordinates</span>
+    <span class="n">ZW1</span><span class="o">=</span><span class="n">rootChord</span><span class="o">*</span><span class="nb">sind</span><span class="p">(</span><span class="n">i_w</span><span class="p">);</span>
+    <span class="n">ZW2</span><span class="o">=</span><span class="p">(</span><span class="n">XW4</span><span class="o">-</span><span class="n">XW2</span><span class="p">)</span><span class="o">*</span><span class="nb">sind</span><span class="p">(</span><span class="n">i_w</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">tand</span><span class="p">(</span><span class="n">Gam</span><span class="p">);</span>
+
+    <span class="n">XWRRoot</span> <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_xRoot</span><span class="p">)</span><span class="o">.*</span><span class="n">rootChord</span><span class="p">)</span><span class="o">+</span><span class="n">XW1</span><span class="p">;</span>
+    <span class="n">XWRTip</span>  <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_xTip</span><span class="o">.*</span><span class="n">tipChord</span><span class="p">)</span><span class="o">+</span><span class="n">XW2</span><span class="p">);</span>
+
+    <span class="n">XWRLRoot</span> <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_xRoot</span><span class="p">)</span><span class="o">.*</span><span class="n">rootChord</span><span class="p">)</span><span class="o">+</span><span class="n">XW1</span><span class="p">;</span>
+    <span class="n">XWRLTip</span> <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_xTip</span><span class="o">.*</span><span class="n">tipChord</span><span class="p">)</span><span class="o">+</span><span class="n">XW2</span><span class="p">);</span>
+
+    <span class="n">YWRT3</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">XWRRoot</span><span class="p">),</span><span class="mi">2</span><span class="p">);</span>
+
+    <span class="n">ZWRLRoot</span> <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_yRoot</span><span class="p">)</span><span class="o">.*</span><span class="n">rootChord</span><span class="p">)</span><span class="o">+</span><span class="n">ZW1</span><span class="p">;</span>
+    <span class="n">ZWRLTip</span> <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_yTip</span><span class="p">)</span><span class="o">.*</span><span class="n">tipChord</span><span class="p">)</span><span class="o">+</span><span class="n">ZW2</span><span class="p">;</span>
+
+    <span class="n">YWRT3</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">YWRT3</span><span class="p">(:,</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="o">+</span><span class="p">((</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">cosd</span><span class="p">(</span><span class="n">Gam</span><span class="p">));</span>
+    <span class="n">XWRT3</span> <span class="o">=</span> <span class="p">[</span><span class="n">XWRLRoot</span><span class="p">,</span><span class="n">XWRLTip</span><span class="p">];</span>
+    <span class="n">ZWRT3</span> <span class="o">=</span> <span class="p">[</span><span class="n">ZWRLRoot</span><span class="p">,</span><span class="n">ZWRLTip</span><span class="p">];</span>
+
+    <span class="c1">% Plot Left Wing</span>
+    <span class="n">wingPreviewLeft</span> <span class="o">=</span> <span class="nb">surface</span><span class="p">(</span><span class="n">previewAxes</span><span class="p">,</span><span class="n">XWRT3</span><span class="p">,</span><span class="n">YWRT3</span><span class="p">,</span><span class="n">ZWRT3</span><span class="p">);</span>
+    <span class="n">wingPreviewLeft</span><span class="o">.</span><span class="n">EdgeColor</span> <span class="o">=</span> <span class="s1">'none'</span><span class="p">;</span>
+
+    <span class="n">YWRT</span> <span class="o">=</span> <span class="nb">zeros</span><span class="p">(</span><span class="nb">length</span><span class="p">(</span><span class="n">XWRRoot</span><span class="p">),</span><span class="mi">2</span><span class="p">);</span>
+
+    <span class="n">ZWRRoot</span> <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_yRoot</span><span class="p">)</span><span class="o">.*</span><span class="n">rootChord</span><span class="p">)</span><span class="o">+</span><span class="n">ZW1</span><span class="p">;</span>
+    <span class="n">ZWRTip</span> <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_yTip</span><span class="p">)</span><span class="o">.*</span><span class="n">tipChord</span><span class="p">)</span><span class="o">+</span><span class="n">ZW2</span><span class="p">;</span>
+
+    <span class="n">YWRT</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">YWRT</span><span class="p">(:,</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="o">-</span><span class="p">((</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">cosd</span><span class="p">(</span><span class="n">Gam</span><span class="p">));</span>
+    <span class="n">XWRT</span> <span class="o">=</span> <span class="p">[</span><span class="n">XWRRoot</span><span class="p">,</span><span class="n">XWRTip</span><span class="p">];</span>
+    <span class="n">ZWRT</span> <span class="o">=</span> <span class="p">[</span><span class="n">ZWRRoot</span><span class="p">,</span><span class="n">ZWRTip</span><span class="p">];</span>
+
+    <span class="c1">% Plot Right Wing</span>
+    <span class="n">wingPreviewRight</span> <span class="o">=</span> <span class="nb">surface</span><span class="p">(</span><span class="n">previewAxes</span><span class="p">,</span><span class="n">XWRT</span><span class="p">,</span><span class="n">YWRT</span><span class="p">,</span><span class="n">ZWRT</span><span class="p">);</span>
+    <span class="n">wingPreviewRight</span><span class="o">.</span><span class="n">EdgeColor</span> <span class="o">=</span> <span class="s1">'none'</span><span class="p">;</span>
+<span class="k">end</span> 
+     
+<span class="nb">hold</span> <span class="n">on</span>
+
+<span class="c1">% X-Coordinates</span>
+<span class="n">XW1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">XW2</span><span class="o">=</span><span class="n">XW1</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">tand</span><span class="p">(</span><span class="n">LamLE</span><span class="p">);</span>
+<span class="n">XW4</span><span class="o">=</span><span class="n">XW1</span><span class="o">+</span><span class="n">rootChord</span><span class="p">;</span>
+<span class="n">XWR2</span> <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_xRoot</span><span class="o">.*</span><span class="n">tipChord</span><span class="p">)</span><span class="o">+</span><span class="n">XW2</span><span class="p">);</span>
+
+<span class="c1">% Y-Coordinates</span>
+<span class="n">YWR2</span> <span class="o">=</span> <span class="p">(</span><span class="nb">zeros</span><span class="p">(</span><span class="n">comboAirfoilSize</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="c1">% Z-Coordinates</span>
+<span class="n">ZW2</span><span class="o">=</span><span class="p">(</span><span class="n">XW4</span><span class="o">-</span><span class="n">XW2</span><span class="p">)</span><span class="o">*</span><span class="nb">sind</span><span class="p">(</span><span class="n">i_w</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">b</span><span class="p">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="nb">tand</span><span class="p">(</span><span class="n">Gam</span><span class="p">);</span>
+<span class="n">ZWR2</span> <span class="o">=</span> <span class="p">((</span><span class="n">comboAirfoil_coords_yTip</span><span class="o">+</span><span class="n">ZW2</span><span class="p">)</span><span class="o">.*</span><span class="n">tipChord</span><span class="p">);</span>    
+
+<span class="c1">% The ends of the airfoil are plotted at the end, because the surface can't render a Fill</span>
+<span class="n">rightAirfoil</span> <span class="o">=</span> <span class="nb">fill3</span><span class="p">(</span><span class="n">previewAxes</span><span class="p">,</span><span class="n">XWR2</span><span class="p">,</span><span class="n">YWR2</span><span class="p">,</span><span class="n">ZWR2</span><span class="p">,[</span><span class="o">.</span><span class="mi">5</span> <span class="o">.</span><span class="mi">5</span> <span class="o">.</span><span class="mi">5</span><span class="p">]);</span>
+<span class="n">leftAirfoil</span>  <span class="o">=</span> <span class="nb">fill3</span><span class="p">(</span><span class="n">previewAxes</span><span class="p">,</span><span class="n">XWR2</span><span class="p">,</span><span class="o">-</span><span class="n">YWR2</span><span class="p">,</span><span class="n">ZWR2</span><span class="p">,[</span><span class="o">.</span><span class="mi">5</span> <span class="o">.</span><span class="mi">5</span> <span class="o">.</span><span class="mi">5</span><span class="p">]);</span>
+</code></pre></div></div>
+<p>Below is an example of this concept. Note the wing is modified from Left to Right. Also similar to the <b>Airfoil</b> code, when placing points on both the leading and trailing edges, the slope of these points is needed to ensure the wing is modeled properly.</p>
+
+<h4>Modified Wing Planform Outline</h4>
+<div class="text-center p-4">
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_LE_1.png" class="img-thumbnail" />
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_LE_2.png" class="img-thumbnail" />
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_LE_2_TE_1.png" class="img-thumbnail" />
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_LE_2_TE_2.png" class="img-thumbnail" />
+</div>
+
+<h4>Modified Wing Planform</h4>
+<div class="text-center p-4">
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_1.png" class="img-thumbnail" />
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_2.png" class="img-thumbnail" />
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_3.png" class="img-thumbnail" />
+    <img width="600px" src="../img/pac_project/wing_planform_mod/wing_section_4.png" class="img-thumbnail" />
+</div>
+
+<p>Obviously, the wing above is only used to demonstrate the planform modification code. Any aerodynamic, stability or structural changes are not currently taken into account. However, this code is necessary to allow for tracing the outline of an existing aircraft design into PAC and reverse engineering it’s capabilities(future feature). For the simple empirical methods that PAC uses, an adjustment of the overall wing surface area by summing the surface areas of each wing segment together could be used for a very rough empirical estimate of the effects of such a wing.</p>
+
+</div>
+
+<footer class="navbar navbar-expand navbar-light bg-light bg-gradient border-top">
+  <div class="container-fluid">
+    <div class="ms-auto">
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <small><a class="nav-link" href="https://www.youtube.com/watch?v=mfQjG4t4M08">Engineering is awesome!</a></small>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  </body>
+</html>
